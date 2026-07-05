@@ -60,7 +60,7 @@ export class ArgonGuardPasswordHasher {
     if (typeof encodedHash !== "string") throw new MalformedHashError(ReasonCodes.NotPhc);
 
     // SPEC §6.2 步驟 2：解析前長度預檢
-    if (encodedHash.length > MAX_ENCODED_LENGTH) {
+    if (Buffer.byteLength(encodedHash, "utf8") > MAX_ENCODED_LENGTH) {
       throw new MalformedHashError(ReasonCodes.EncodedTooLong);
     }
 
@@ -105,7 +105,7 @@ export class ArgonGuardPasswordHasher {
    */
   needsRehash(encodedHash: string): boolean {
     if (typeof encodedHash !== "string") throw new MalformedHashError(ReasonCodes.NotPhc);
-    if (encodedHash.length > MAX_ENCODED_LENGTH) {
+    if (Buffer.byteLength(encodedHash, "utf8") > MAX_ENCODED_LENGTH) {
       throw new MalformedHashError(ReasonCodes.EncodedTooLong);
     }
 

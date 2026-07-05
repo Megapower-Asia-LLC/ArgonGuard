@@ -211,7 +211,12 @@ def main(outdir: Path) -> None:
     R("rej-params-out-of-order", crafted(params="t=2,m=19456,p=1"),
       "MalformedHash", "malformed.params_out_of_order", "t before m")
     R("rej-too-long", crafted(tag_b64="A" * 480), "MalformedHash", "malformed.encoded_too_long",
-      ">512 chars pre-check before parse")
+      ">512 bytes pre-check before parse (ASCII)")
+    # C5 單位＝UTF-8 bytes（M5 迴歸）：非 ASCII 撐爆 byte 長度但 code-point/UTF-16 長度 <512，
+    # 修復前 .NET/Node（UTF-16）與 Python（code point）漏放、PHP（bytes）擋——四語言曾分歧。
+    R("rej-too-long-utf8", "$argon2id$v=19$m=19456,t=2,p=1$" + "中" * 200,
+      "MalformedHash", "malformed.encoded_too_long",
+      "non-ASCII: 631 UTF-8 bytes but 231 code points/UTF-16 units — C5 counts UTF-8 bytes")
     R("rej-not-phc", "not-a-hash-at-all", "MalformedHash", "malformed.not_phc", "garbage input")
     R("rej-empty", "", "MalformedHash", "malformed.not_phc", "empty encoded string")
     # unsupported algorithm

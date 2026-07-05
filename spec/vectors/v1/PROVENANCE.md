@@ -3,6 +3,9 @@
 **Frozen:** 2026-07-06
 **Generator:** `spec/tools/gen_vectors.py`（ArgonGuard 自家實作零參與）
 
+**增補紀錄（append，非修改既有 entry）：**
+- 2026-07-06：M5 對抗式審查發現 C5 長度單位跨語言不一致，spec PATCH 釘死「512 UTF-8 bytes」後，於 `reject.json` append 一筆 `rej-too-long-utf8`（非 ASCII 撐爆 byte 長度但 code-point/UTF-16 長度 <512）作迴歸向量。其餘五檔重產後 sha256 byte-identical（既有 entry 零改動），僅 `reject.json` sha 變動；符合 append-only（新增 entry 允許、既有 entry 不改）。
+
 ## 來源獨立性揭露（計畫 M1-T4 同源條款）
 
 原計畫的雙來源為 argon2 reference CLI × argon2-cffi。查證發現**兩者同綁 phc-winner-argon2 參考 C 實作**（非彼此獨立）：

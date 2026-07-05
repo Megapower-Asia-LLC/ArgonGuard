@@ -80,7 +80,7 @@ class ArgonGuardPasswordHasher(object):
             raise MalformedHashError(NOT_PHC)
 
         # SPEC §6.2 步驟 2：解析前長度預檢
-        if len(encoded_hash) > MAX_ENCODED_LENGTH:
+        if len(encoded_hash.encode("utf-8", "surrogatepass")) > MAX_ENCODED_LENGTH:
             raise MalformedHashError(ENCODED_TOO_LONG)
 
         # §6.2 3b 前置：演算法 token 判斷（非 argon2id 不套 argon2 嚴格文法；baseline §1）
@@ -120,7 +120,7 @@ class ArgonGuardPasswordHasher(object):
         """雜湊是否非以現行 active 檔位精確參數產生（SPEC §6.3；只 parse 不雜湊）。"""
         if encoded_hash is None:
             raise MalformedHashError(NOT_PHC)
-        if len(encoded_hash) > MAX_ENCODED_LENGTH:
+        if len(encoded_hash.encode("utf-8", "surrogatepass")) > MAX_ENCODED_LENGTH:
             raise MalformedHashError(ENCODED_TOO_LONG)
 
         algorithm = try_get_algorithm(encoded_hash)

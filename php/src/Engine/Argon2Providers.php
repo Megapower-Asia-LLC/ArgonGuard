@@ -26,9 +26,13 @@ final class Argon2Providers
     {
         $sodiumAvailable = extension_loaded('sodium') && defined('SODIUM_CRYPTO_PWHASH_ALG_ARGON2ID13');
 
-        // CI 專用（nightly sodium-only conformance）：只允許強制切到 sodium ——
-        // 兩個 provider 皆通過同一組凍結向量，此 hook 不構成安全降級面；生產環境勿設。
-        if ($sodiumAvailable && getenv('ARGONGUARD_TEST_FORCE_PROVIDER') === 'sodium') {
+        // CI-only（nightly sodium-only conformance）：雙重門檻——除環境變數外，還要求
+        // 測試 bootstrap 定義的 ARGONGUARD_TESTING 常數。生產部署環境即使誤設/被設 env
+        // 也不會生效（避免 CWE-489 型選擇性可用性面）。兩 provider 皆通過同一組凍結向量。
+        if ($sodiumAvailable
+            && defined('ARGONGUARD_TESTING')
+            && getenv('ARGONGUARD_TEST_FORCE_PROVIDER') === 'sodium'
+        ) {
             return new SodiumArgon2Provider();
         }
 

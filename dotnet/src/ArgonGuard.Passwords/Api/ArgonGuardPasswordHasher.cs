@@ -66,7 +66,9 @@ public sealed class ArgonGuardPasswordHasher : IArgonGuardPasswordHasher
         if (encodedHash is null) throw new MalformedHashException(ReasonCodes.NotPhc);
 
         // SPEC §6.2 步驟 2：解析前長度預檢
-        if (encodedHash.Length > VerificationPolicy.MaxEncodedLength)
+        // SPEC §4 C5：長度以 UTF-8 bytes 計（四語言一致）。用非嚴格 Encoding.UTF8（lone surrogate
+        // → U+FFFD replacement、不拋），使畸形 encoded 仍走 typed-error 路徑而非逃逸 EncoderFallbackException。
+        if (Encoding.UTF8.GetByteCount(encodedHash) > VerificationPolicy.MaxEncodedLength)
             throw new MalformedHashException(ReasonCodes.EncodedTooLong);
 
         // §6.2 3b 前置：演算法 token 判斷（非 argon2id 不套 argon2 嚴格文法）
@@ -108,7 +110,9 @@ public sealed class ArgonGuardPasswordHasher : IArgonGuardPasswordHasher
     public bool NeedsRehash(string encodedHash)
     {
         if (encodedHash is null) throw new MalformedHashException(ReasonCodes.NotPhc);
-        if (encodedHash.Length > VerificationPolicy.MaxEncodedLength)
+        // SPEC §4 C5：長度以 UTF-8 bytes 計（四語言一致）。用非嚴格 Encoding.UTF8（lone surrogate
+        // → U+FFFD replacement、不拋），使畸形 encoded 仍走 typed-error 路徑而非逃逸 EncoderFallbackException。
+        if (Encoding.UTF8.GetByteCount(encodedHash) > VerificationPolicy.MaxEncodedLength)
             throw new MalformedHashException(ReasonCodes.EncodedTooLong);
 
         var algorithm = PhcParser.TryGetAlgorithm(encodedHash);

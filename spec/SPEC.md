@@ -80,7 +80,7 @@ Verification applies the following checks to a parsed argon2id PHC string, in th
 - C1. `m` MUST be ≤ 262144 KiB (256 MiB) → otherwise `policy_violation.m_above_ceiling`.
 - C2. `t` MUST be ≤ 8 → otherwise `policy_violation.t_above_ceiling`.
 - C3–C4. Salt/tag upper bounds as in F4.
-- C5. The encoded string MUST be ≤ 512 characters, checked **before** any parsing; longer input → `MalformedHash` / `malformed.encoded_too_long`.
+- C5. The encoded string MUST be ≤ 512 **UTF-8 bytes**, checked **before** any parsing; longer input → `MalformedHash` / `malformed.encoded_too_long`. (Unit is UTF-8 bytes, consistent with §5 I2, so all implementations agree regardless of their native string model. A conformant argon2id encoded string is pure ASCII, where byte length equals character length.)
 
 **Parsing strictness:**
 
@@ -123,7 +123,7 @@ if verifyPassword(pw, stored):
 
 ```
 1. Input checks (§5).
-2. length(encoded) > 512  -> MalformedHash(malformed.encoded_too_long)
+2. utf8_byte_length(encoded) > 512  -> MalformedHash(malformed.encoded_too_long)
 3. Strict PHC parse:
    a. Parse OK and algorithm == argon2id:
       - policy checks (§4) pass -> recompute tag -> constant-time compare -> bool
