@@ -1,0 +1,80 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "dotnet/v*"
+      - "node/v*"
+      - "python/v*"
+
+jobs:
+  dotnet:
+    if: startsWith(github.ref, 'refs/tags/dotnet/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - run: dotnet test dotnet --nologo
+      - run: dotnet pack dotnet/src/ArgonGuard.Passwords -c Release -o out
+      - name: Publish to NuGet (需 NUGET_API_KEY secret；無 prefix reservation 亦可發佈)
+        if: vars.PUBLISH_ENABLED == 'true'
+        run: dotnet nuget push "out/*.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nuget-package
+          path: out/*.nupkg
+
+  node:
+    if: startsWith(github.ref, 'refs/tags/node/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # npm provenance
+    defaults:
+      run:
+        working-directory: node
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - run: npm ci
+      - run: npm run typecheck && npm test
+      - run: npm run build
+      - name: Publish to npm (provenance；需 NPM_TOKEN 或 trusted publisher)
+        if: vars.PUBLISH_ENABLED == 'true'
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm pack
+      - uses: actions/upload-artifact@v4
+        with:
+          name: npm-package
+          path: node/*.tgz
+
+  python:
+    if: startsWith(github.ref, 'refs/tags/python/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # PyPI trusted publishing (OIDC)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install build && python -m build python
+      - name: Publish to PyPI (trusted publishing；平台端設定 publisher 後生效)
+        if: vars.PUBLISH_ENABLED == 'true'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: python/dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pypi-package
+          path: python/dist/*

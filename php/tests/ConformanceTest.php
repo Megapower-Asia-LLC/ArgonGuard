@@ -7,6 +7,7 @@ namespace ArgonGuard\Passwords\Tests;
 use ArgonGuard\Passwords\ArgonGuardException;
 use ArgonGuard\Passwords\ArgonGuardPasswordHasher;
 use ArgonGuard\Passwords\Legacy\LegacyPasswordVerifier;
+use ArgonGuard\Passwords\UnsupportedEnvironmentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -64,6 +65,17 @@ final class ConformanceTest extends TestCase
     {
         $e = VectorData::entry('verify.json', $id);
         $hasher = new ArgonGuardPasswordHasher();
+
+        // sodium-forced（nightly sodium-only conformance）已知環境限制（SPEC §8.7）：
+        // libsodium crypto_pwhash 僅支援 16-byte salt，非 16B salt 的外部雜湊
+        // 必須拋 UnsupportedEnvironment 而非誤回 false。
+        if ($id === 'ver-salt32-ok' && getenv('ARGONGUARD_TEST_FORCE_PROVIDER') === 'sodium') {
+            $this->expectException(UnsupportedEnvironmentException::class);
+            $hasher->verifyPassword(VectorData::hex($e['passwordHex']), $e['encoded']);
+
+            return;
+        }
+
         self::assertSame(
             $e['expected'],
             $hasher->verifyPassword(VectorData::hex($e['passwordHex']), $e['encoded']),

@@ -174,6 +174,7 @@ Five categories; every error carries a machine-readable reason code. The exact s
 - 8.4 **Memory zeroing** is best-effort and NOT guaranteed (documented non-goal).
 - 8.5 Implementations MUST keep the Argon2 engine behind an internal provider boundary; the engine type MUST NOT leak into the public API.
 - 8.6 **No logging.** The library itself MUST NOT log. Nothing the library emits (errors, reason codes) may carry passwords, salts, or tags, so application logs cannot leak them through ArgonGuard (OWASP Logging Cheat Sheet). Documentation MUST advise applications to log only verify success/failure and timestamps.
+- 8.7 **PHP sodium-fallback environment limitation.** libsodium's `crypto_pwhash` only supports exactly 16-byte salts. In the degraded environment where PHP lacks native argon2id and the sodium fallback is active, an externally produced hash with a salt length other than 16 bytes cannot be recomputed; the implementation MUST raise `UnsupportedEnvironment` (`environment.argon2id_unavailable`) rather than return `false` (preserves the V1 single-meaning rule). All hashes produced by ArgonGuard itself use 16-byte salts and are unaffected.
 
 ## 9. Versioning
 
