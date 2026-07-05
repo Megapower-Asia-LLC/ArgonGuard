@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "specVersion": "1.0.0",
+  "frozen": true,
+  "description": "dev harness I/O 契約（M2-T10 凍結）。四語言 harness 各自跑此 contract test。命令來源＝spec/vectors/v1 凍結子集。",
+  "entries": [
+    {
+      "command": {
+        "op": "hash",
+        "profile": "default",
+        "passwordHex": "70617373776f7264"
+      },
+      "expect": {
+        "ok": true,
+        "encodedPrefix": "$argon2id$v=19$m=19456,t=2,p=1$",
+        "selfVerify": true
+      }
+    },
+    {
+      "command": {
+        "op": "hash",
+        "profile": "high",
+        "passwordHex": "e5af86e7a2bce6b8ace8a9a6"
+      },
+      "expect": {
+        "ok": true,
+        "encodedPrefix": "$argon2id$v=19$m=65536,t=2,p=1$",
+        "selfVerify": true
+      }
+    },
+    {
+      "command": {
+        "op": "verify",
+        "passwordHex": "70617373776f7264",
+        "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$IaZP5na2KGZS16RsxjK9ytjuQLHsYJN3L1Wf5Q7ZcaE"
+      },
+      "expect": {
+        "ok": true,
+        "value": true
+      }
+    },
+    {
+      "command": {
+        "op": "verify",
+        "passwordHex": "f09f9490f09f9ba170617373",
+        "encoded": "$argon2id$v=19$m=131072,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$5EkpEJEcIwORwZyXljJDiD+ICN9RRm4mgxWXM6NbvSo"
+      },
+      "expect": {
+        "ok": true,
+        "value": true
+      }
+    },
+    {
+      "command": {
+        "op": "verify",
+        "passwordHex": "77726f6e6770617373",
+        "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$IaZP5na2KGZS16RsxjK9ytjuQLHsYJN3L1Wf5Q7ZcaE"
+      },
+      "expect": {
+        "ok": true,
+        "value": false
+      }
+    },
+    {
+      "command": {
+        "op": "verify",
+        "passwordHex": "70617373776f7264",
+        "encoded": "$argon2id$v=19$m=47104,t=1,p=1$QXJvbkd1YXJkVjFTMDEhIQ$qaYQJ9ildbnX5abTMalEPiLum2cRq97a0ZgaPOlozVs"
+      },
+      "expect": {
+        "ok": true,
+        "value": true
+      }
+    },
+    {
+      "command": {
+        "op": "verify",
+        "passwordHex": "70617373776f7264",
+        "encoded": "$argon2id$v=19$m=7167,t=5,p=1$QXJvbkd1YXJkVjFTMDEhIQ$gEkx/ZcpZoyfeXjMLmin/VppPqbqHaqxdxI5ogIawNc"
+      },
+      "expect": {
+        "ok": false,
+        "error": "PolicyViolation",
+        "reason": "policy_violation.below_owasp_frontier"
+      }
+    },
+    {
+      "command": {
+        "op": "verify",
+        "passwordHex": "70617373776f7264",
+        "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ==$ERERERERERERERERERERERERERERERERERERERERERE"
+      },
+      "expect": {
+        "ok": false,
+        "error": "MalformedHash",
+        "reason": "malformed.bad_base64"
+      }
+    },
+    {
+      "command": {
+        "op": "needsRehash",
+        "activeProfile": "default",
+        "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$IaZP5na2KGZS16RsxjK9ytjuQLHsYJN3L1Wf5Q7ZcaE"
+      },
+      "expect": {
+        "ok": true,
+        "value": false
+      }
+    },
+    {
+      "command": {
+        "op": "needsRehash",
+        "activeProfile": "default",
+        "encoded": "$argon2id$v=19$m=65536,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$KLfeqaA0+ZCxtuZSRQz/03uIr//T5NPsQsLOmMPar+g"
+      },
+      "expect": {
+        "ok": true,
+        "value": true
+      }
+    },
+    {
+      "command": {
+        "op": "needsRehash",
+        "activeProfile": "default",
+        "legacyRegistered": true,
+        "encoded": "$2b$12$LQVkVYq1S7Ck1MQIViYyNOG3Fabe/y0BB6kJ1O8ZQNXY9nCzC1jU6"
+      },
+      "expect": {
+        "ok": true,
+        "value": true
+      }
+    },
+    {
+      "command": {
+        "op": "needsRehash",
+        "activeProfile": "default",
+        "encoded": "corrupted-data"
+      },
+      "expect": {
+        "ok": false,
+        "error": "MalformedHash",
+        "reason": "malformed.not_phc"
+      }
+    }
+  ]
+}
