@@ -7,8 +7,8 @@ namespace ArgonGuard\Passwords;
 /** ArgonGuard 規格版本資訊。 */
 final class SpecVersion
 {
-    /** ArgonGuard 規格版本（M1 凍結前為 dev 佔位）。 */
-    public const VALUE = '0.0.0-dev';
+    /** 實作的 ArgonGuard 規格版本（SPEC §9）。 */
+    public const VALUE = '1.0.0';
 
     private function __construct()
     {

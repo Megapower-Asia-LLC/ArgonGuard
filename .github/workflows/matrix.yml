@@ -1,0 +1,43 @@
+name: cross-lang-matrix
+
+on:
+  push:
+    branches: [main]
+    paths: ["spec/**", "dotnet/**", "node/**", "python/**", "php/**", ".github/workflows/matrix.yml"]
+  pull_request:
+    paths: ["spec/**", "dotnet/**", "node/**", "python/**", "php/**", ".github/workflows/matrix.yml"]
+
+jobs:
+  matrix:
+    # 守門 3（M3d）：4×4 跨語言 round-trip 矩陣＋四語言 harness 契約——擋 merge
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: sodium
+      - name: Build .NET harness
+        run: dotnet build dotnet/tools/Harness --nologo
+      - name: Build Node library
+        run: npm ci && npm run build
+        working-directory: node
+      - name: Install Python package
+        run: pip install ./python
+      - name: Harness contract (all four languages)
+        run: |
+          python3 spec/tools/run_contract.py -- $(cat dotnet/HARNESS_CMD)
+          python3 spec/tools/run_contract.py -- $(cat node/HARNESS_CMD)
+          python3 spec/tools/run_contract.py -- $(cat python/HARNESS_CMD)
+          python3 spec/tools/run_contract.py -- $(cat php/HARNESS_CMD)
+      - name: 4x4 round-trip matrix
+        run: python3 spec/tools/matrix.py

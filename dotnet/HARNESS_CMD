@@ -1,1 +1,1 @@
-/Users/aikenlin/.dotnet/dotnet run --project dotnet/tools/Harness --no-build
+dotnet run --project dotnet/tools/Harness --no-build

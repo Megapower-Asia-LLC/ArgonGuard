@@ -1,7 +1,7 @@
 {
   "name": "@argonguard/passwords",
   "version": "0.1.0-dev",
-  "description": "OWASP-compliant Argon2id password hashing component. Implements ArgonGuard Spec (PHC string format, OWASP frontier verification policy).",
+  "description": "OWASP-compliant Argon2id password hashing component. Implements ArgonGuard Spec 1.0 (PHC string format, OWASP frontier verification policy).",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -31,8 +31,12 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@types/node": "^22.20.0",
     "tsup": "^8.3.0",
     "typescript": "^5.6.0",
     "vitest": "^2.1.0"
+  },
+  "dependencies": {
+    "@node-rs/argon2": "^2.0.2"
   }
 }

@@ -83,4 +83,16 @@ public class SpecAlignmentTests
         Assert.False(FixedTimeEquals.Polyfill(baseline, prefixDiff));
         Assert.False(FixedTimeEquals.Polyfill(baseline, suffixDiff));
     }
+
+    [Fact]
+    public void Version_2Pow32Plus19_MustNotWrapTo19()
+    {
+        // SPEC §4 S4：數字不得靜默 wrap——v=4294967315 (2^32+19) 必須是 unsupported_version
+        var hasher = new ArgonGuardPasswordHasher();
+        var salt = Convert.ToBase64String(new byte[16]).TrimEnd('=');
+        var tag = Convert.ToBase64String(new byte[32]).TrimEnd('=');
+        var encoded = $"$argon2id$v=4294967315$m=19456,t=2,p=1${salt}${tag}";
+        var ex = Assert.Throws<PolicyViolationException>(() => hasher.VerifyPassword("x", encoded));
+        Assert.Equal("policy_violation.unsupported_version", ex.Reason);
+    }
 }

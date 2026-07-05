@@ -5,10 +5,11 @@ build-backend = "hatchling.build"
 [project]
 name = "argonguard-passwords"
 version = "0.1.0.dev0"
-description = "OWASP-compliant Argon2id password hashing component. Implements ArgonGuard Spec (PHC string format, OWASP frontier verification policy)."
+description = "OWASP-compliant Argon2id password hashing component. Implements ArgonGuard Spec 1.0 (PHC string format, OWASP frontier verification policy)."
 license = "MIT"
 requires-python = ">=3.9"
 authors = [{ name = "Megapower Asia LLC" }]
+dependencies = ["argon2-cffi>=21.2"]
 
 [project.urls]
 Repository = "https://github.com/Megapower-Asia-LLC/ArgonGuard"

@@ -42,13 +42,14 @@ internal static class PhcParser
         if (algorithm.Length == 0 || !IsLowerAlnumDash(algorithm))
             throw new MalformedHashException(ReasonCodes.NotPhc);
 
-        int? version = null;
+        long? version = null;
         int paramsIndex = 2;
         if (parts.Length == 6)
         {
             if (!parts[2].StartsWith("v=", StringComparison.Ordinal))
                 throw new MalformedHashException(ReasonCodes.NotPhc);
-            version = (int)ParseNumber(parts[2].Substring(2));
+            // 保持 long、不做窄化 cast——SPEC §4 S4 禁止靜默 wrap（v=2^32+19 必須是 unsupported_version 而非 19）
+            version = ParseNumber(parts[2].Substring(2));
             paramsIndex = 3;
         }
 
