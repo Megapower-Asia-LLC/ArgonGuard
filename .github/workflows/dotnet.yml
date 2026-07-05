@@ -1,0 +1,26 @@
+name: dotnet
+
+on:
+  push:
+    branches: [main]
+    paths: ["dotnet/**", "spec/**", ".github/workflows/dotnet.yml"]
+  pull_request:
+    paths: ["dotnet/**", "spec/**", ".github/workflows/dotnet.yml"]
+
+jobs:
+  test:
+    # net8.0 於 Linux；net48（netstandard2.0 消費路徑）於 Windows —— 驗證矩陣見 master plan Global Constraints
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: dotnet
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - run: dotnet test --nologo

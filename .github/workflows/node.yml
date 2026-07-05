@@ -1,0 +1,28 @@
+name: node
+
+on:
+  push:
+    branches: [main]
+    paths: ["node/**", "spec/**", ".github/workflows/node.yml"]
+  pull_request:
+    paths: ["node/**", "spec/**", ".github/workflows/node.yml"]
+
+jobs:
+  test:
+    # M0 空殼：ubuntu × Node 20/22/24；完整平台矩陣（alpine/arm64/windows/macOS）於 M3a 擴充
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22, 24]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: node
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
