@@ -29,16 +29,23 @@
 | NuGet | 建帳號 → 產 API key → repo secret `NUGET_API_KEY`；（選配）寄 prefix reservation（草稿見 naming.md；被拒不影響發佈） |
 | npm | 註冊 org `argonguard` → granular token 或 trusted publisher → repo secret `NPM_TOKEN` |
 | PyPI | 建帳號 → 專案 `argonguard-passwords` 設 trusted publisher（指向本 repo `release.yml`，environment 不限）——之後零 token |
-| Packagist | 以 GitHub 登入 → 需先建 php subtree 鏡像 repo（`argonguard-php`，composer.json 在根目錄）→ submit |
+| Packagist | 建公開 repo `Megapower-Asia-LLC/argonguard-php`（空）→ repo secret `MIRROR_PAT`（對該 repo 有 push 權的 token）→ 於 packagist.org submit 該鏡像 |
 | GitHub | repo variable `PUBLISH_ENABLED=true` |
 
-### PHP subtree 鏡像（Packagist 根目錄限制）
+### 版本一致性
+
+各套件 manifest 的 `version` 是 `0.1.0-dev` 佔位；`release.yml` 從 tag（如 `dotnet/v1.0.0`）解析版本並注入打包（`-p:Version`／`npm version`／`sed` pyproject），tag 名即發佈版本，不會誤發佔位版。
+
+### PHP subtree 鏡像（Packagist 根目錄限制，已自動化）
+
+`.github/workflows/php-mirror.yml` 於推 `php/v*` tag 時自動把 `php/` subtree split 並 force push 到 `argonguard-php` 鏡像（含同名 tag），Packagist webhook 隨即更新。前置：上表 Packagist 列的 repo＋secret＋`PUBLISH_ENABLED=true`。手動觸發可用 `workflow_dispatch`。
+
+本地手動備援：
 
 ```bash
-git subtree split --prefix=php -b php-mirror
-git push git@github.com:Megapower-Asia-LLC/argonguard-php.git php-mirror:main
+SPLIT=$(git subtree split --prefix=php HEAD)
+git push git@github.com:Megapower-Asia-LLC/argonguard-php.git "$SPLIT:main" --force
 ```
-（v1.1 可自動化為 workflow；目前手動或由 Claude 執行。）
 
 ## Nightly 守門
 

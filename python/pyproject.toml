@@ -4,15 +4,27 @@ build-backend = "hatchling.build"
 
 [project]
 name = "argonguard-passwords"
+# 佔位版本；發佈時由 release workflow 以 tag（python/vX.Y.Z）覆寫
 version = "0.1.0.dev0"
 description = "OWASP-compliant Argon2id password hashing component. Implements ArgonGuard Spec 1.0 (PHC string format, OWASP frontier verification policy)."
+readme = "README.md"
 license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.9"
 authors = [{ name = "Megapower Asia LLC" }]
+keywords = ["argon2", "argon2id", "password", "hashing", "owasp", "phc", "security"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Security :: Cryptography",
+    "Programming Language :: Python :: 3",
+    "Typing :: Typed",
+]
 dependencies = ["argon2-cffi>=21.2"]
 
 [project.urls]
 Repository = "https://github.com/Megapower-Asia-LLC/ArgonGuard"
+Documentation = "https://github.com/Megapower-Asia-LLC/ArgonGuard/tree/main/python"
 
 [project.optional-dependencies]
 # bcrypt 僅供 README 遷移範例 example test 實跑（非 runtime 依賴；核心不出貨 legacy 演算法，SPEC L3）

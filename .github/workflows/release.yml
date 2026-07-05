@@ -11,16 +11,20 @@ jobs:
   dotnet:
     if: startsWith(github.ref, 'refs/tags/dotnet/v')
     runs-on: ubuntu-latest
+    env:
+      REF: ${{ github.ref }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
+      - name: Resolve version from tag
+        run: echo "VERSION=${REF#refs/tags/dotnet/v}" >> "$GITHUB_ENV"
       - run: dotnet test dotnet --nologo
-      - run: dotnet pack dotnet/src/ArgonGuard.Passwords -c Release -o out
-      - name: Publish to NuGet (需 NUGET_API_KEY secret；無 prefix reservation 亦可發佈)
+      - run: dotnet pack dotnet/src/ArgonGuard.Passwords -c Release -p:Version="$VERSION" -o out
+      - name: Publish to NuGet (needs NUGET_API_KEY secret; works without prefix reservation)
         if: vars.PUBLISH_ENABLED == 'true'
-        run: dotnet nuget push "out/*.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push "out/*.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
       - uses: actions/upload-artifact@v4
@@ -37,6 +41,8 @@ jobs:
     defaults:
       run:
         working-directory: node
+    env:
+      REF: ${{ github.ref }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -46,7 +52,9 @@ jobs:
       - run: npm ci
       - run: npm run typecheck && npm test
       - run: npm run build
-      - name: Publish to npm (provenance；需 NPM_TOKEN 或 trusted publisher)
+      - name: Set version from tag
+        run: npm version "${REF#refs/tags/node/v}" --no-git-tag-version --allow-same-version
+      - name: Publish to npm (provenance; needs NPM_TOKEN or trusted publisher)
         if: vars.PUBLISH_ENABLED == 'true'
         run: npm publish --provenance --access public
         env:
@@ -63,13 +71,19 @@ jobs:
     permissions:
       contents: read
       id-token: write # PyPI trusted publishing (OIDC)
+    env:
+      REF: ${{ github.ref }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Set version from tag
+        run: |
+          VERSION="${REF#refs/tags/python/v}"
+          sed -i "s/^version = .*/version = \"$VERSION\"/" python/pyproject.toml
       - run: pip install build && python -m build python
-      - name: Publish to PyPI (trusted publishing；平台端設定 publisher 後生效)
+      - name: Publish to PyPI (trusted publishing; set publisher on PyPI first)
         if: vars.PUBLISH_ENABLED == 'true'
         uses: pypa/gh-action-pypi-publish@release/v1
         with:

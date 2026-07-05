@@ -1,0 +1,39 @@
+name: php-mirror
+
+# Packagist 要求 composer.json 在 repo 根目錄，但本專案是 monorepo。
+# 此 workflow 於推 php/v* tag 時，把 php/ 子目錄 subtree split 成獨立 commit 樹，
+# 推到鏡像 repo（Megapower-Asia-LLC/argonguard-php），Packagist 追蹤該鏡像。
+#
+# 啟用前置（一次性，見 docs/ops/operations.md）：
+#   1. 建立公開 repo Megapower-Asia-LLC/argonguard-php（空）
+#   2. 設 repo secret MIRROR_PAT（對 argonguard-php 有 push 權的 PAT/fine-grained token）
+#   3. 設 repo variable PUBLISH_ENABLED=true
+#   4. 在 packagist.org submit https://github.com/Megapower-Asia-LLC/argonguard-php
+
+on:
+  push:
+    tags:
+      - "php/v*"
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    if: vars.PUBLISH_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    env:
+      REF: ${{ github.ref }}
+      MIRROR_PAT: ${{ secrets.MIRROR_PAT }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Split php/ subtree and push to mirror
+        run: |
+          set -euo pipefail
+          SPLIT_SHA=$(git subtree split --prefix=php HEAD)
+          git push "https://x-access-token:${MIRROR_PAT}@github.com/Megapower-Asia-LLC/argonguard-php.git" "${SPLIT_SHA}:refs/heads/main" --force
+          if [[ "$REF" == refs/tags/php/v* ]]; then
+            VERSION="${REF#refs/tags/php/v}"
+            git tag "v${VERSION}" "${SPLIT_SHA}"
+            git push "https://x-access-token:${MIRROR_PAT}@github.com/Megapower-Asia-LLC/argonguard-php.git" "v${VERSION}"
+          fi
