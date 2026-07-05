@@ -15,7 +15,8 @@ dependencies = ["argon2-cffi>=21.2"]
 Repository = "https://github.com/Megapower-Asia-LLC/ArgonGuard"
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0"]
+# bcrypt 僅供 README 遷移範例 example test 實跑（非 runtime 依賴；核心不出貨 legacy 演算法，SPEC L3）
+dev = ["pytest>=8.0", "bcrypt>=4.0"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/argonguard"]
