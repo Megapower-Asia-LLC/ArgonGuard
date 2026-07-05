@@ -1,0 +1,35 @@
+{
+  "$schema": "./schemas/engine-units.schema.json",
+  "specVersion": "1.0.0",
+  "description": "Authoritative memory-parameter unit mapping per engine API, with expected constants in each engine's native unit. Assertions in implementations MUST compare against these authoritative values (never against locally recomputed ones).",
+  "units": {
+    "phc_string_m": { "unit": "KiB" },
+    "dotnet_konscious_MemorySize": { "unit": "KiB" },
+    "node_node_rs_argon2_memoryCost": { "unit": "KiB" },
+    "python_argon2_cffi_memory_cost": { "unit": "KiB" },
+    "php_password_hash_memory_cost": { "unit": "KiB" },
+    "php_sodium_crypto_pwhash_memlimit": { "unit": "bytes", "conversion": "memlimit = m_kib * 1024" }
+  },
+  "profiles": {
+    "default": { "m_kib": 19456, "t": 2, "p": 1, "saltBytes": 16, "tagBytes": 32, "sodium_memlimit_bytes": 19922944 },
+    "high":    { "m_kib": 65536, "t": 2, "p": 1, "saltBytes": 16, "tagBytes": 32, "sodium_memlimit_bytes": 67108864 },
+    "highest": { "m_kib": 131072, "t": 2, "p": 1, "saltBytes": 16, "tagBytes": 32, "sodium_memlimit_bytes": 134217728 }
+  },
+  "verificationPolicy": {
+    "owaspFrontier": [
+      { "t": 1, "min_m_kib": 47104 },
+      { "t": 2, "min_m_kib": 19456 },
+      { "t": 3, "min_m_kib": 12288 },
+      { "t": 4, "min_m_kib": 9216 },
+      { "t": 5, "min_m_kib": 7168, "appliesTo": "t >= 5" }
+    ],
+    "owaspVerifiedAgainst": "OWASP Password Storage Cheat Sheet, verified 2026-07-05",
+    "ceiling": { "max_m_kib": 262144, "max_t": 8, "maxSaltBytes": 64, "maxTagBytes": 128, "maxEncodedLength": 512 },
+    "floors": { "minSaltBytes": 16, "minTagBytes": 32, "requiredVersion": 19, "requiredParallelism": 1 },
+    "sodiumBoundsAssertions": {
+      "frontier_min_memlimit_bytes": 7340032,
+      "ceiling_memlimit_bytes": 268435456,
+      "note": "Implementations using libsodium MUST assert frontier_min >= crypto_pwhash_MEMLIMIT_MIN, ceiling <= crypto_pwhash_MEMLIMIT_MAX, and t range [1,8] within [OPSLIMIT_MIN, OPSLIMIT_MAX] at load/test time."
+    }
+  }
+}

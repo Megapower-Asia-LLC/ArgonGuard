@@ -1,0 +1,69 @@
+{
+  "specVersion": "1.0.0",
+  "frozen": true,
+  "entries": [
+    {
+      "id": "ver-t1-owasp-ok",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=47104,t=1,p=1$QXJvbkd1YXJkVjFTMDEhIQ$qaYQJ9ildbnX5abTMalEPiLum2cRq97a0ZgaPOlozVs",
+      "expected": true,
+      "note": "OWASP frontier/ceiling pass (m=47104,t=1)"
+    },
+    {
+      "id": "ver-t5-floor-ok",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=7168,t=5,p=1$QXJvbkd1YXJkVjFTMDEhIQ$r2gRLEkdT4VnRah0AI5dnr0sC0FPoKz88/2LihXBVr4",
+      "expected": true,
+      "note": "OWASP frontier/ceiling pass (m=7168,t=5)"
+    },
+    {
+      "id": "ver-t8-ceiling-ok",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=7168,t=8,p=1$QXJvbkd1YXJkVjFTMDEhIQ$Evjk9fG8W3m3etX2VvV5m22UOZJNig0//WrBriymugU",
+      "expected": true,
+      "note": "OWASP frontier/ceiling pass (m=7168,t=8)"
+    },
+    {
+      "id": "ver-salt32-ok",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$qlWqVapVqlWqVapVqlWqVapVqlWqVapVqlWqVapVqlU$GtZF8I210on2YtHBZpqqOmQkIfLb2Fgu55PzKdvrJM4",
+      "expected": true,
+      "note": "32-byte salt within [16,64]"
+    },
+    {
+      "id": "ver-tag64-ok",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$jIN3goJCvdDsTkzQqgzl3fzGZUWE67FxmPGyBhAu8GItmg77TQZhy2IgFSZCaG3Unphm0EDIBAtUks4AMiK+qQ",
+      "expected": true,
+      "note": "64-byte tag within [32,128]"
+    },
+    {
+      "id": "ver-wrong-password",
+      "passwordHex": "77726f6e6770617373",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$IaZP5na2KGZS16RsxjK9ytjuQLHsYJN3L1Wf5Q7ZcaE",
+      "expected": false,
+      "note": "verify false has exactly one meaning"
+    },
+    {
+      "id": "ver-tampered-salt",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$AXJvbkd1YXJkVjFTMDEhIQ$IaZP5na2KGZS16RsxjK9ytjuQLHsYJN3L1Wf5Q7ZcaE",
+      "expected": false,
+      "note": "tampered salt → recompute mismatch"
+    },
+    {
+      "id": "ver-tampered-tag",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$AaZP5na2KGZS16RsxjK9ytjuQLHsYJN3L1Wf5Q7ZcaE",
+      "expected": false,
+      "note": "tampered tag → mismatch"
+    },
+    {
+      "id": "ver-nfc-vs-nfd",
+      "passwordHex": "636166c3a9",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$RFAOvteZOW8eKO7iSSy5SPeH1TylL0i2RZFvqc6htiY",
+      "expected": false,
+      "note": "no Unicode normalization: NFC input vs NFD-derived hash"
+    }
+  ]
+}

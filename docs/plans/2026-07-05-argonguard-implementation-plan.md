@@ -118,6 +118,7 @@
 
 ## M5 — 對抗式審查與驗證
 
+- **輸入**：Aiken 的「OWASP 規範與標準完整筆記」§5.3（Top 10 A02/A05/A07/A08/A09 審查索引＋邊界案例清單，含 salt 竄改、10MB 超長輸入、最低檔位計時延遲檢查）＋ SPEC.md Appendix A 追溯表。
 - 多視角對抗審查（Workflow 多 agent）：誤用情境、邊界案例、安全風險（timing、DoS、降級、解析歧義）、spec/實作漂移（對照權威 artifact；跨語言 sync/async 形狀差異為刻意設計不列漂移）。
 - **必做整合冒煙（每語言一個代表點）**：.NET＝ASP.NET Core Identity custom hasher 接入；PHP＝與原生 `password_verify` 互通；Node＝最小 HTTP handler 登入流程；Python＝最小 FastAPI/WSGI handler 登入流程。其餘整合為可選。
 - **severity 分級處置（DoD）**：發現項分 critical/high/medium/low；**critical/high 必須修復、不得「接受」**；medium/low 可明文接受但須記錄理由；**high 以上的殘餘風險決策須知會 Aiken**（業務風險知情權）；報告含「已知限制/殘餘風險」章節，歸檔 `docs/reviews/`。

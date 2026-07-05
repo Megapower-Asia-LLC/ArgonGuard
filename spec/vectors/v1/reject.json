@@ -1,0 +1,190 @@
+{
+  "specVersion": "1.0.0",
+  "frozen": true,
+  "entries": [
+    {
+      "id": "rej-frontier-7167-t5",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=7167,t=5,p=1$QXJvbkd1YXJkVjFTMDEhIQ$gEkx/ZcpZoyfeXjMLmin/VppPqbqHaqxdxI5ogIawNc",
+      "expectedError": "PolicyViolation",
+      "expectedReason": "policy_violation.below_owasp_frontier",
+      "note": "frontier boundary (7167,5)"
+    },
+    {
+      "id": "rej-frontier-18432-t2",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=18432,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$0sxgx6g0us3jbRsWv+NaZO1vluLZ8pIEYzrdeeH/358",
+      "expectedError": "PolicyViolation",
+      "expectedReason": "policy_violation.below_owasp_frontier",
+      "note": "below (19456,2)"
+    },
+    {
+      "id": "rej-frontier-46080-t1",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=46080,t=1,p=1$QXJvbkd1YXJkVjFTMDEhIQ$DHGehA+quViXMSQPwZCjTky3ng4oUNJYxS5A92f3Kg0",
+      "expectedError": "PolicyViolation",
+      "expectedReason": "policy_violation.below_owasp_frontier",
+      "note": "below t=1 floor 47104"
+    },
+    {
+      "id": "rej-t9-above-ceiling",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=7168,t=9,p=1$QXJvbkd1YXJkVjFTMDEhIQ$8h73he1g+X41Vwt84NxXH09A95Q7CZGRrBqiIo72XRs",
+      "expectedError": "PolicyViolation",
+      "expectedReason": "policy_violation.t_above_ceiling",
+      "note": "ceiling boundary (7168,9)"
+    },
+    {
+      "id": "rej-m-above-ceiling",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=262208,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$ERERERERERERERERERERERERERERERERERERERERERE",
+      "expectedError": "PolicyViolation",
+      "expectedReason": "policy_violation.m_above_ceiling",
+      "note": "m>262144 rejected before recompute (crafted tag; policy precedes recompute)"
+    },
+    {
+      "id": "rej-p2",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=2$QXJvbkd1YXJkVjFTMDEhIQ$ERERERERERERERERERERERERERERERERERERERERERE",
+      "expectedError": "PolicyViolation",
+      "expectedReason": "policy_violation.p_not_one",
+      "note": "p=2 (crafted)"
+    },
+    {
+      "id": "rej-missing-v",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$ERERERERERERERERERERERERERERERERERERERERERE",
+      "expectedError": "PolicyViolation",
+      "expectedReason": "policy_violation.missing_version",
+      "note": "missing v field"
+    },
+    {
+      "id": "rej-v16",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=16$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$ERERERERERERERERERERERERERERERERERERERERERE",
+      "expectedError": "PolicyViolation",
+      "expectedReason": "policy_violation.unsupported_version",
+      "note": "v=16"
+    },
+    {
+      "id": "rej-keyid",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1,keyid=Zm9v$QXJvbkd1YXJkVjFTMDEhIQ$ERERERERERERERERERERERERERERERERERERERERERE",
+      "expectedError": "PolicyViolation",
+      "expectedReason": "policy_violation.keyid_not_allowed",
+      "note": "keyid present"
+    },
+    {
+      "id": "rej-data",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1,data=Zm9v$QXJvbkd1YXJkVjFTMDEhIQ$ERERERERERERERERERERERERERERERERERERERERERE",
+      "expectedError": "PolicyViolation",
+      "expectedReason": "policy_violation.data_not_allowed",
+      "note": "data present"
+    },
+    {
+      "id": "rej-salt8",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$MTIzNDU2Nzg$Zsmf7ZTiIiMUDRc6bF8sB2Xxyt1aG6hcw56qpR3xNJU",
+      "expectedError": "PolicyViolation",
+      "expectedReason": "policy_violation.salt_length_out_of_range",
+      "note": "8-byte salt < 16"
+    },
+    {
+      "id": "rej-salt72",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIi$ERERERERERERERERERERERERERERERERERERERERERE",
+      "expectedError": "PolicyViolation",
+      "expectedReason": "policy_violation.salt_length_out_of_range",
+      "note": "72-byte salt > 64 (crafted)"
+    },
+    {
+      "id": "rej-tag16",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$JkM22I5rqkVy96cD27BtEw",
+      "expectedError": "PolicyViolation",
+      "expectedReason": "policy_violation.tag_length_out_of_range",
+      "note": "16-byte tag < 32"
+    },
+    {
+      "id": "rej-tag136",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$MzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMw",
+      "expectedError": "PolicyViolation",
+      "expectedReason": "policy_violation.tag_length_out_of_range",
+      "note": "136-byte tag > 128 (crafted)"
+    },
+    {
+      "id": "rej-b64-padding",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ==$ERERERERERERERERERERERERERERERERERERERERERE",
+      "expectedError": "MalformedHash",
+      "expectedReason": "malformed.bad_base64",
+      "note": "padded base64 MUST be rejected"
+    },
+    {
+      "id": "rej-b64-url-alphabet",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$-_ERERERERERERERERERERERERERERERERERERERERE",
+      "expectedError": "MalformedHash",
+      "expectedReason": "malformed.bad_base64",
+      "note": "base64url alphabet"
+    },
+    {
+      "id": "rej-params-out-of-order",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$t=2,m=19456,p=1$QXJvbkd1YXJkVjFTMDEhIQ$ERERERERERERERERERERERERERERERERERERERERERE",
+      "expectedError": "MalformedHash",
+      "expectedReason": "malformed.params_out_of_order",
+      "note": "t before m"
+    },
+    {
+      "id": "rej-too-long",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "expectedError": "MalformedHash",
+      "expectedReason": "malformed.encoded_too_long",
+      "note": ">512 chars pre-check before parse"
+    },
+    {
+      "id": "rej-not-phc",
+      "passwordHex": "70617373776f7264",
+      "encoded": "not-a-hash-at-all",
+      "expectedError": "MalformedHash",
+      "expectedReason": "malformed.not_phc",
+      "note": "garbage input"
+    },
+    {
+      "id": "rej-empty",
+      "passwordHex": "70617373776f7264",
+      "encoded": "",
+      "expectedError": "MalformedHash",
+      "expectedReason": "malformed.not_phc",
+      "note": "empty encoded string"
+    },
+    {
+      "id": "rej-argon2i",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2i$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$yWUoUKNIc2L0zGEjEauetmrnIaO3lr5yO4/cbHno27A",
+      "expectedError": "UnsupportedAlgorithm",
+      "expectedReason": "unsupported.algorithm",
+      "note": "argon2i (real hash, wrong algorithm)"
+    },
+    {
+      "id": "rej-argon2d",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$argon2d$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$RipTwiTUkFu7U++zcZ4Xx5w7oJaOWm8MToQ/Y1ipue0",
+      "expectedError": "UnsupportedAlgorithm",
+      "expectedReason": "unsupported.algorithm",
+      "note": "argon2d"
+    },
+    {
+      "id": "rej-bcrypt",
+      "passwordHex": "70617373776f7264",
+      "encoded": "$2b$12$LQVkVYq1S7Ck1MQIViYyNOG3Fabe/y0BB6kJ1O8ZQNXY9nCzC1jU6",
+      "expectedError": "UnsupportedAlgorithm",
+      "expectedReason": "unsupported.algorithm",
+      "note": "bcrypt without registered legacy verifier"
+    }
+  ]
+}

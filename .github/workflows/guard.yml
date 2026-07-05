@@ -1,0 +1,19 @@
+name: guard
+
+on:
+  push:
+    branches: [main]
+    paths: ["spec/**", ".github/workflows/guard.yml"]
+  pull_request:
+    paths: ["spec/**", ".github/workflows/guard.yml"]
+
+jobs:
+  invariants:
+    # 守門 1：spec 不變式（frontier/哨兵/快照 append-only/MANIFEST/reason-code 一致性）
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 spec/tools/guard.py

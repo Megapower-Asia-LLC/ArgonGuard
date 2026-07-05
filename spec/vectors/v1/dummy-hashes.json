@@ -1,0 +1,21 @@
+{
+  "specVersion": "1.0.0",
+  "frozen": true,
+  "entries": [
+    {
+      "profile": "default",
+      "passwordHex": "6172676f6e67756172642d63616e6f6e6963616c2d64756d6d792d7631",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$riaQ+1VTqIye/4YPSyX98KF026/dRys5Okx/7M54mp8"
+    },
+    {
+      "profile": "high",
+      "passwordHex": "6172676f6e67756172642d63616e6f6e6963616c2d64756d6d792d7631",
+      "encoded": "$argon2id$v=19$m=65536,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$4QWUa7kyWkvGf+/sO4YyUJHixfbpm1SIIjmvxwEo58E"
+    },
+    {
+      "profile": "highest",
+      "passwordHex": "6172676f6e67756172642d63616e6f6e6963616c2d64756d6d792d7631",
+      "encoded": "$argon2id$v=19$m=131072,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$wXxGFK2QJIXoF71Kayg1hF2q5PQWFa7CHRNzlKHY6Lk"
+    }
+  ]
+}

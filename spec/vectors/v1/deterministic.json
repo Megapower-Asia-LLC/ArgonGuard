@@ -1,0 +1,281 @@
+{
+  "specVersion": "1.0.0",
+  "frozen": true,
+  "entries": [
+    {
+      "id": "det-ascii-default",
+      "passwordHex": "70617373776f7264",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 19456,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "default",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$IaZP5na2KGZS16RsxjK9ytjuQLHsYJN3L1Wf5Q7ZcaE"
+    },
+    {
+      "id": "det-ascii-high",
+      "passwordHex": "70617373776f7264",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 65536,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "high",
+      "encoded": "$argon2id$v=19$m=65536,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$KLfeqaA0+ZCxtuZSRQz/03uIr//T5NPsQsLOmMPar+g"
+    },
+    {
+      "id": "det-ascii-highest",
+      "passwordHex": "70617373776f7264",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 131072,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "highest",
+      "encoded": "$argon2id$v=19$m=131072,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$YPlh2jerA2GyXpan5z5aHN2BPIiS5n6h0f5e0fX+6bA"
+    },
+    {
+      "id": "det-phrase-default",
+      "passwordHex": "636f727265637420686f727365206261747465727920737461706c65",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 19456,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "default",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$bkdWt2jtt8fjfzUDCkteSJOl0kMRywmjussnVSfvc1o"
+    },
+    {
+      "id": "det-phrase-high",
+      "passwordHex": "636f727265637420686f727365206261747465727920737461706c65",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 65536,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "high",
+      "encoded": "$argon2id$v=19$m=65536,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$TDNweoOIXX3XD6M9GAupDa3dvvv/s8X6ThnYG6nXPQg"
+    },
+    {
+      "id": "det-phrase-highest",
+      "passwordHex": "636f727265637420686f727365206261747465727920737461706c65",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 131072,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "highest",
+      "encoded": "$argon2id$v=19$m=131072,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$G3u0X5DdkfegQk81IgSfoUWlw9I4A2RtUUOJh5syURM"
+    },
+    {
+      "id": "det-cjk-default",
+      "passwordHex": "e5af86e7a2bce6b8ace8a9a6",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 19456,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "default",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$mwas2e30MGovMXv55TlxubbrGhrtw714QAMOlkElZcE"
+    },
+    {
+      "id": "det-cjk-high",
+      "passwordHex": "e5af86e7a2bce6b8ace8a9a6",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 65536,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "high",
+      "encoded": "$argon2id$v=19$m=65536,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$Jn7L1YXHZ2T5ljdndFAXsX9onP4vl4WiejsVhZ+WR9s"
+    },
+    {
+      "id": "det-cjk-highest",
+      "passwordHex": "e5af86e7a2bce6b8ace8a9a6",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 131072,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "highest",
+      "encoded": "$argon2id$v=19$m=131072,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$ZEcVqaEjA3SP9khTawNB+AkPFYTtxu6Zzjln0Ug/IlM"
+    },
+    {
+      "id": "det-emoji-default",
+      "passwordHex": "f09f9490f09f9ba170617373",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 19456,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "default",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$JcU3AQyusAKF6LwhgXfoBSF7O3cRRLWp+BWs7i+/AMU"
+    },
+    {
+      "id": "det-emoji-high",
+      "passwordHex": "f09f9490f09f9ba170617373",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 65536,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "high",
+      "encoded": "$argon2id$v=19$m=65536,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$cyf9xsO7Hq9l+GbC5hRnQsrSnWS6zTQ5WossO0htdoA"
+    },
+    {
+      "id": "det-emoji-highest",
+      "passwordHex": "f09f9490f09f9ba170617373",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 131072,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "highest",
+      "encoded": "$argon2id$v=19$m=131072,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$5EkpEJEcIwORwZyXljJDiD+ICN9RRm4mgxWXM6NbvSo"
+    },
+    {
+      "id": "det-nfc-default",
+      "passwordHex": "636166c3a9",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 19456,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "default",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$IujfPWZ/P+EHv91uvZ+9eCehitageuyuLzBqsf2SR5Q"
+    },
+    {
+      "id": "det-nfc-high",
+      "passwordHex": "636166c3a9",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 65536,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "high",
+      "encoded": "$argon2id$v=19$m=65536,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$WFEEiONtEqcEt7NaGgXw9kd8R435b05AM41pebhSHyA"
+    },
+    {
+      "id": "det-nfc-highest",
+      "passwordHex": "636166c3a9",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 131072,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "highest",
+      "encoded": "$argon2id$v=19$m=131072,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$oAJTcUZuMSBQiEH0jMmsfMSr5h3yYEz5saCiQIiGzDI"
+    },
+    {
+      "id": "det-nfd-default",
+      "passwordHex": "63616665cc81",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 19456,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "default",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$RFAOvteZOW8eKO7iSSy5SPeH1TylL0i2RZFvqc6htiY"
+    },
+    {
+      "id": "det-nfd-high",
+      "passwordHex": "63616665cc81",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 65536,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "high",
+      "encoded": "$argon2id$v=19$m=65536,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$JfPYLliHb7nxl7m50q7w2eaDYL5WFVVNEIT3USjtqdw"
+    },
+    {
+      "id": "det-nfd-highest",
+      "passwordHex": "63616665cc81",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 131072,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "highest",
+      "encoded": "$argon2id$v=19$m=131072,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$rSLvcIor+4fW87kS1DvbIa8dcXu/R50FcVdCzHhxeQk"
+    },
+    {
+      "id": "det-min1-default",
+      "passwordHex": "61",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 19456,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "default",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$Y1LvVGcz06PgZHU0081vEavnmS3XZFR3paFxHY7UVFM"
+    },
+    {
+      "id": "det-min1-high",
+      "passwordHex": "61",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 65536,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "high",
+      "encoded": "$argon2id$v=19$m=65536,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$ttq2wk3Xvyy5D5rr7Huq1Uv9kEdjgD0BXxxQnU6GsnI"
+    },
+    {
+      "id": "det-min1-highest",
+      "passwordHex": "61",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 131072,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "highest",
+      "encoded": "$argon2id$v=19$m=131072,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$sIZidSFvtSooi/GtBqmudwTCNAdtxTu9hHfkoXjhvrs"
+    },
+    {
+      "id": "det-max1024-default",
+      "passwordHex": "e6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ac61",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 19456,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "default",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$uVXj3am2SPVPPCsYIybzQqnoebjDz5uevPupki4MxP4"
+    },
+    {
+      "id": "det-max1024-high",
+      "passwordHex": "e6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ac61",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 65536,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "high",
+      "encoded": "$argon2id$v=19$m=65536,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$tcAuQyLl/H57kf8rQGUFcE1E3vGjh0aKTXWD0gwEsYg"
+    },
+    {
+      "id": "det-max1024-highest",
+      "passwordHex": "e6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ace6b8ac61",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 131072,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "highest",
+      "encoded": "$argon2id$v=19$m=131072,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$i1qoRUz+4bLPMIn+Lm2P4UmDFxehK+I5OgOGN3JjA/o"
+    },
+    {
+      "id": "det-ascii-default-binsalt",
+      "passwordHex": "70617373776f7264",
+      "saltHex": "f1ff10e0075defacedb0deadbeef1337",
+      "m": 19456,
+      "t": 2,
+      "p": 1,
+      "tagLen": 32,
+      "profile": "default",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$8f8Q4Add76ztsN6tvu8TNw$Wep65eOPOEiDU3sNuuxocTh/0nOh8HNHDM4lzSMXkrg"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "./schemas/reason-codes.schema.json",
+  "specVersion": "1.0.0",
+  "description": "ArgonGuard authoritative reason-code enumeration. All four implementations MUST emit these exact strings. SPEC.md prose and all language test suites defer to this file.",
+  "categories": {
+    "MalformedHash": {
+      "description": "The encoded string cannot be strictly parsed as a PHC argon2id string.",
+      "codes": [
+        "malformed.not_phc",
+        "malformed.bad_base64",
+        "malformed.params_out_of_order",
+        "malformed.encoded_too_long"
+      ]
+    },
+    "UnsupportedAlgorithm": {
+      "description": "Parsed but algorithm is not argon2id, and no legacy verifier claimed the string.",
+      "codes": [
+        "unsupported.algorithm"
+      ]
+    },
+    "PolicyViolation": {
+      "description": "Valid argon2id PHC string whose parameters fall outside the verification policy (OWASP frontier floor, ceiling, p==1, v==19, no keyid/data), and no legacy verifier claimed it.",
+      "codes": [
+        "policy_violation.below_owasp_frontier",
+        "policy_violation.m_above_ceiling",
+        "policy_violation.t_above_ceiling",
+        "policy_violation.salt_length_out_of_range",
+        "policy_violation.tag_length_out_of_range",
+        "policy_violation.p_not_one",
+        "policy_violation.missing_version",
+        "policy_violation.unsupported_version",
+        "policy_violation.keyid_not_allowed",
+        "policy_violation.data_not_allowed"
+      ]
+    },
+    "InvalidInput": {
+      "description": "The password input violates the input canonicalization rules (UTF-8 byte-length 1..1024, no NUL, well-formed Unicode).",
+      "codes": [
+        "invalid_input.password_empty",
+        "invalid_input.password_too_long",
+        "invalid_input.password_contains_nul",
+        "invalid_input.password_not_well_formed"
+      ]
+    },
+    "UnsupportedEnvironment": {
+      "description": "The runtime environment cannot provide argon2id (primarily PHP built without argon2id and without ext-sodium).",
+      "codes": [
+        "environment.argon2id_unavailable"
+      ]
+    }
+  }
+}

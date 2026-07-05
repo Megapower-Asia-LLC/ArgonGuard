@@ -1,0 +1,93 @@
+{
+  "specVersion": "1.0.0",
+  "frozen": true,
+  "description": "needsRehash(encoded) 相對 activeProfile 的 truth table；legacyRegistered 表示是否註冊了認領 $2b$ 的 legacy verifier",
+  "entries": [
+    {
+      "id": "nr-exact-default",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$IaZP5na2KGZS16RsxjK9ytjuQLHsYJN3L1Wf5Q7ZcaE",
+      "activeProfile": "default",
+      "legacyRegistered": false,
+      "expected": false,
+      "note": "exact match"
+    },
+    {
+      "id": "nr-exact-high",
+      "encoded": "$argon2id$v=19$m=65536,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$KLfeqaA0+ZCxtuZSRQz/03uIr//T5NPsQsLOmMPar+g",
+      "activeProfile": "high",
+      "legacyRegistered": false,
+      "expected": false,
+      "note": "exact match"
+    },
+    {
+      "id": "nr-exact-highest",
+      "encoded": "$argon2id$v=19$m=131072,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$YPlh2jerA2GyXpan5z5aHN2BPIiS5n6h0f5e0fX+6bA",
+      "activeProfile": "highest",
+      "legacyRegistered": false,
+      "expected": false,
+      "note": "exact match"
+    },
+    {
+      "id": "nr-stronger-than-active",
+      "encoded": "$argon2id$v=19$m=65536,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$KLfeqaA0+ZCxtuZSRQz/03uIr//T5NPsQsLOmMPar+g",
+      "activeProfile": "default",
+      "legacyRegistered": false,
+      "expected": true,
+      "note": "stronger also true (converge to single set)"
+    },
+    {
+      "id": "nr-weaker-than-active",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$IaZP5na2KGZS16RsxjK9ytjuQLHsYJN3L1Wf5Q7ZcaE",
+      "activeProfile": "high",
+      "legacyRegistered": false,
+      "expected": true,
+      "note": "weaker true"
+    },
+    {
+      "id": "nr-offlist-owasp",
+      "encoded": "$argon2id$v=19$m=47104,t=1,p=1$QXJvbkd1YXJkVjFTMDEhIQ$qaYQJ9ildbnX5abTMalEPiLum2cRq97a0ZgaPOlozVs",
+      "activeProfile": "default",
+      "legacyRegistered": false,
+      "expected": true,
+      "note": "(47104,1,1) differs from active"
+    },
+    {
+      "id": "nr-salt-len-differs",
+      "encoded": "$argon2id$v=19$m=19456,t=2,p=1$qlWqVapVqlWqVapVqlWqVapVqlWqVapVqlWqVapVqlU$GtZF8I210on2YtHBZpqqOmQkIfLb2Fgu55PzKdvrJM4",
+      "activeProfile": "default",
+      "legacyRegistered": false,
+      "expected": true,
+      "note": "salt length differs from profile"
+    },
+    {
+      "id": "nr-legacy-claimed",
+      "encoded": "$2b$12$LQVkVYq1S7Ck1MQIViYyNOG3Fabe/y0BB6kJ1O8ZQNXY9nCzC1jU6",
+      "activeProfile": "default",
+      "legacyRegistered": true,
+      "expected": true,
+      "note": "legacy claimed → always true"
+    },
+    {
+      "id": "nr-legacy-unclaimed-nonargon2id",
+      "encoded": "$2b$12$LQVkVYq1S7Ck1MQIViYyNOG3Fabe/y0BB6kJ1O8ZQNXY9nCzC1jU6",
+      "activeProfile": "default",
+      "legacyRegistered": false,
+      "expected": {
+        "error": "UnsupportedAlgorithm",
+        "reason": "unsupported.algorithm"
+      },
+      "note": "parseable-as-non-argon2id, unclaimed"
+    },
+    {
+      "id": "nr-garbage-unclaimed",
+      "encoded": "corrupted-data",
+      "activeProfile": "default",
+      "legacyRegistered": false,
+      "expected": {
+        "error": "MalformedHash",
+        "reason": "malformed.not_phc"
+      },
+      "note": "corruption must not fold into true"
+    }
+  ]
+}

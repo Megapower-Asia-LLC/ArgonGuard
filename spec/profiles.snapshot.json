@@ -1,0 +1,10 @@
+{
+  "description": "Append-only snapshot of profiles and frontier. Guard CI asserts every entry here exists identically in engine-units.json. Adding new profiles appends here in the same PR; modifying an existing entry is a build-time red light.",
+  "profiles": {
+    "default": { "m_kib": 19456, "t": 2, "p": 1, "saltBytes": 16, "tagBytes": 32 },
+    "high":    { "m_kib": 65536, "t": 2, "p": 1, "saltBytes": 16, "tagBytes": 32 },
+    "highest": { "m_kib": 131072, "t": 2, "p": 1, "saltBytes": 16, "tagBytes": 32 }
+  },
+  "owaspFrontier": { "1": 47104, "2": 19456, "3": 12288, "4": 9216, "5+": 7168 },
+  "ceiling": { "max_m_kib": 262144, "max_t": 8, "maxSaltBytes": 64, "maxTagBytes": 128, "maxEncodedLength": 512 }
+}
