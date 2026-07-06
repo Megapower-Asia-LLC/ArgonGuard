@@ -28,6 +28,9 @@ jobs:
           extensions: sodium
       - name: Build .NET harness
         run: dotnet build dotnet/tools/Harness --nologo
+      - name: Build core (node depends on @argonguard/core dist)
+        run: npm ci && npm run build
+        working-directory: core
       - name: Build Node library
         run: npm ci && npm run build
         working-directory: node

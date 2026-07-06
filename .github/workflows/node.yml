@@ -23,6 +23,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
+      # core 先 build：node 遷入後依賴 @argonguard/core 的 dist（否則 typecheck 找不到模組）
+      - run: npm ci && npm run build
+        working-directory: core
       - run: npm ci
       - run: npm run typecheck
       - run: npm test
