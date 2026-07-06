@@ -7,5 +7,6 @@
 | [0003](0003-owasp-frontier-verification-policy.md) | 驗證端政策採 OWASP frontier 凍結常數表 | Accepted |
 | [0004](0004-engine-selection.md) | 各語言底層引擎選型 | Accepted |
 | [0005](0005-engine-memory-units.md) | 引擎 memory 參數單位對照與換算 | Accepted |
+| [0006](0006-edge-wasm-platform.md) | Edge/WASM 平台：規格層抽 `@argonguard/core` ＋ WASM 引擎 ＋ 三套件零耦合 | Accepted |
 
-所有決策皆經 Perplexity 審核共識（見 `docs/reviews/`）；SOT：`docs/specs/2026-07-05-argonguard-design.md`。
+所有決策皆經 Perplexity 審核共識（見 `docs/reviews/`）；SOT：`docs/specs/2026-07-05-argonguard-design.md`，Edge/WASM 見 `docs/specs/2026-07-06-edge-wasm-proposal.md`。
