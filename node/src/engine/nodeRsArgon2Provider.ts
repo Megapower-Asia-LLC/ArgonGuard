@@ -1,12 +1,9 @@
 import { Algorithm, hashRaw, Version } from "@node-rs/argon2";
-import { UnsupportedEnvironmentError } from "../errors.js";
-import { ReasonCodes } from "../reasonCodes.js";
-import type { Argon2Provider } from "./provider.js";
+import { ReasonCodes, UnsupportedEnvironmentError, type Argon2Provider } from "@argonguard/core";
 
 /**
- * @node-rs/argon2（RustCrypto，預編譯原生模組）引擎。
- * memoryCost 單位 KiB（spec/engine-units.json: node_node_rs_argon2_memoryCost）。
- * async hashRaw 走 napi 背景執行緒，不佔用 event loop。
+ * @node-rs/argon2（RustCrypto，預編譯原生模組）引擎，實作 core Argon2Provider。
+ * memoryCost 單位 KiB（spec/engine-units.json）。async hashRaw 走 napi 背景執行緒。
  */
 export class NodeRsArgon2Provider implements Argon2Provider {
   constructor() {
@@ -16,7 +13,7 @@ export class NodeRsArgon2Provider implements Argon2Provider {
     }
   }
 
-  hashRaw(password: Uint8Array, salt: Uint8Array, m: number, t: number, p: number, tagLength: number): Promise<Buffer> {
+  async hashRaw(password: Uint8Array, salt: Uint8Array, m: number, t: number, p: number, tagLength: number): Promise<Uint8Array> {
     return hashRaw(asBuffer(password), {
       salt: asBuffer(salt),
       memoryCost: m,

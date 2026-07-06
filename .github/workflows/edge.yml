@@ -1,0 +1,54 @@
+name: edge
+
+on:
+  push:
+    paths: ["edge/**", "core/**", "spec/**", ".github/workflows/edge.yml"]
+  pull_request:
+    paths: ["edge/**", "core/**", "spec/**", ".github/workflows/edge.yml"]
+
+jobs:
+  # 第 5 個平台維度（5×5）：edge 對凍結向量 conformance，x64 + arm64 驗 SIMD 一致
+  conformance:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest] # x64 + arm64（PPLX 陷阱：SIMD/no-SIMD 輸出須一致）
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # core 先 build（edge 依賴 @argonguard/core dist）
+      - run: npm ci
+        working-directory: core
+      - run: npm run build
+        working-directory: core
+      - run: npm ci
+        working-directory: edge
+      - run: npm run typecheck
+        working-directory: edge
+      # argon2id WASM 對凍結向量（含 engine-raw、memory-budget 守衛）bit-identical
+      - run: npm test
+        working-directory: edge
+      # 驗證發佈 dist 打包（tsup：bundle core、external argon2id + wasm 靜態 import）
+      - run: npm run build
+        working-directory: edge
+
+  # 真 workerd（Miniflare）：驗證 wasm 靜態 import 在生產 runtime 實際可跑
+  workerd:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+        working-directory: core
+      - run: npm run build
+        working-directory: core
+      - run: npm ci
+        working-directory: edge
+      - name: Miniflare workerd（wasm 靜態 import + 跨引擎驗證四語言向量）
+        run: npm run test:workerd
+        working-directory: edge

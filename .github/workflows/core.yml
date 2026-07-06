@@ -1,0 +1,23 @@
+name: core
+
+on:
+  push:
+    paths: ["core/**", "spec/**", ".github/workflows/core.yml"]
+  pull_request:
+    paths: ["core/**", "spec/**", ".github/workflows/core.yml"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: core
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm run typecheck
+      # 平台無關規格層 + 凍結向量 conformance（含 phc/policy 單元、engine-raw）
+      - run: npm test

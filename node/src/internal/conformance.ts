@@ -1,5 +1,5 @@
+import { encodePhc } from "@argonguard/core";
 import { NodeRsArgon2Provider } from "../engine/nodeRsArgon2Provider.js";
-import { encodePhc } from "../phc.js";
 
 /**
  * Conformance 測試專用（不從 index.ts 匯出、不進公開 API）：

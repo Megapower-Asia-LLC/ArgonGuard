@@ -1,7 +1,6 @@
 /**
- * Legacy 格式驗證擴充點（SPEC §6.4）。僅能於建構 ArgonGuardPasswordHasher 時
- * 以不可變有序清單注入；執行期動態註冊在 API 形狀上不可能。
- * 核心不內建任何 legacy 演算法實作；bcrypt 等完整範例見專案文件。
+ * Legacy 格式驗證擴充點（SPEC §6.4）。僅能於建構 hasher 時以不可變有序清單注入；
+ * 執行期動態註冊在 API 形狀上不可能。核心不內建任何 legacy 演算法實作；bcrypt 等範例見文件。
  */
 export interface LegacyPasswordVerifier {
   /** 廉價前綴判斷：此 verifier 是否認領該字串。不得執行昂貴運算。 */

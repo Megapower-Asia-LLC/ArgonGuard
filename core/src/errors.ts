@@ -45,7 +45,7 @@ export class InvalidInputError extends ArgonGuardError {
   }
 }
 
-/** 執行環境無法提供 argon2id（SPEC §7；Node 引擎為預編譯原生模組，正常情況不會發生）。 */
+/** 執行環境無法提供 argon2id（SPEC §7）。 */
 export class UnsupportedEnvironmentError extends ArgonGuardError {
   constructor(reason: string) {
     super(reason, `Environment cannot provide argon2id (${reason}).`);

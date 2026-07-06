@@ -3,9 +3,9 @@ name: cross-lang-matrix
 on:
   push:
     branches: [main]
-    paths: ["spec/**", "dotnet/**", "node/**", "python/**", "php/**", ".github/workflows/matrix.yml"]
+    paths: ["spec/**", "dotnet/**", "node/**", "core/**", "python/**", "php/**", ".github/workflows/matrix.yml"]
   pull_request:
-    paths: ["spec/**", "dotnet/**", "node/**", "python/**", "php/**", ".github/workflows/matrix.yml"]
+    paths: ["spec/**", "dotnet/**", "node/**", "core/**", "python/**", "php/**", ".github/workflows/matrix.yml"]
 
 jobs:
   matrix:
