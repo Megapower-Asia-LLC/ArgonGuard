@@ -1,0 +1,10 @@
+{
+  // 測試用 worker：在真 workerd（Miniflare）驗證 edge 套件的 wasm 靜態 import。
+  "name": "argonguard-edge-test",
+  "main": "test-worker/index.ts",
+  "compatibility_date": "2026-07-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "rules": [
+    { "type": "CompiledWasm", "globs": ["**/*.wasm"] }
+  ]
+}

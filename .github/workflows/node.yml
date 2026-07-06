@@ -3,9 +3,9 @@ name: node
 on:
   push:
     branches: [main]
-    paths: ["node/**", "spec/**", ".github/workflows/node.yml"]
+    paths: ["node/**", "core/**", "spec/**", ".github/workflows/node.yml"]
   pull_request:
-    paths: ["node/**", "spec/**", ".github/workflows/node.yml"]
+    paths: ["node/**", "core/**", "spec/**", ".github/workflows/node.yml"]
 
 jobs:
   test:
