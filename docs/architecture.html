@@ -1,0 +1,287 @@
+<style>
+  :root {
+    --ground: #f5f6fb;
+    --panel: #ffffff;
+    --panel-2: #eef0f7;
+    --ink: #1a1e2e;
+    --ink-soft: #565d78;
+    --ink-faint: #8b91a8;
+    --line: #dde0ec;
+    --accent: #5b52d4;        /* argon 放電藍紫 */
+    --accent-soft: #ece9fb;
+    --amber: #b07d1c;         /* 規格層暖色 */
+    --amber-soft: #f6eed9;
+    --ok: #2f8556;            /* bit-identical / 通過 */
+    --ok-soft: #e2f1e8;
+    --shadow: 0 1px 2px rgba(26,30,46,.06), 0 8px 24px rgba(26,30,46,.06);
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", "Noto Sans TC", "PingFang TC", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #0e1220; --panel: #171b2c; --panel-2: #1e2338;
+      --ink: #eceeffa8; --ink: #e7e9f5; --ink-soft: #a2a8c4; --ink-faint: #6d7392;
+      --line: #2a3049; --accent: #8f87f4; --accent-soft: #221f3d;
+      --amber: #d9a441; --amber-soft: #2c2413; --ok: #55b483; --ok-soft: #14271c;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #f5f6fb; --panel: #ffffff; --panel-2: #eef0f7; --ink: #1a1e2e;
+    --ink-soft: #565d78; --ink-faint: #8b91a8; --line: #dde0ec; --accent: #5b52d4;
+    --accent-soft: #ece9fb; --amber: #b07d1c; --amber-soft: #f6eed9; --ok: #2f8556; --ok-soft: #e2f1e8;
+    --shadow: 0 1px 2px rgba(26,30,46,.06), 0 8px 24px rgba(26,30,46,.06);
+  }
+  :root[data-theme="dark"] {
+    --ground: #0e1220; --panel: #171b2c; --panel-2: #1e2338; --ink: #e7e9f5;
+    --ink-soft: #a2a8c4; --ink-faint: #6d7392; --line: #2a3049; --accent: #8f87f4;
+    --accent-soft: #221f3d; --amber: #d9a441; --amber-soft: #2c2413; --ok: #55b483; --ok-soft: #14271c;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: var(--sans); line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 56px 24px 96px; }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--accent); font-weight: 600;
+  }
+  h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.08; margin: 12px 0 0;
+       letter-spacing: -.02em; text-wrap: balance; font-weight: 700; }
+  .lede { font-size: clamp(16px, 2.2vw, 19px); color: var(--ink-soft);
+          max-width: 60ch; margin: 16px 0 0; text-wrap: pretty; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .tag {
+    font-family: var(--mono); font-size: 12px; padding: 4px 10px; border-radius: 999px;
+    background: var(--panel); border: 1px solid var(--line); color: var(--ink-soft);
+  }
+  .tag b { color: var(--ok); font-weight: 600; }
+
+  section { margin-top: 52px; }
+  .sec-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px; }
+  .sec-num { font-family: var(--mono); font-size: 13px; color: var(--ink-faint); }
+  h2 { font-size: 21px; margin: 0; letter-spacing: -.01em; font-weight: 650; }
+  .sec-note { color: var(--ink-faint); font-size: 14px; margin-left: auto; }
+
+  .panel {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+    box-shadow: var(--shadow);
+  }
+
+  /* 分層架構 */
+  .layer { padding: 18px 20px; }
+  .layer + .layer { border-top: 1px solid var(--line); }
+  .layer-label {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .dot.spec { background: var(--amber); }
+  .dot.core { background: var(--accent); }
+  .dot.engine { background: var(--ink-faint); }
+  .layer-label.spec { color: var(--amber); }
+  .layer-label.core { color: var(--accent); }
+  .layer-label.engine { color: var(--ink-soft); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: var(--mono); font-size: 12.5px; padding: 6px 11px; border-radius: 8px;
+    background: var(--panel-2); border: 1px solid var(--line); color: var(--ink);
+  }
+  .chip.amber { background: var(--amber-soft); border-color: transparent; color: var(--amber); }
+  .arrow { color: var(--ink-faint); align-self: center; font-family: var(--mono); }
+
+  .boundary {
+    margin: 0; padding: 9px 20px; background: var(--accent-soft);
+    font-family: var(--mono); font-size: 11.5px; color: var(--accent);
+    letter-spacing: .04em; display: flex; align-items: center; gap: 8px;
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+
+  /* 平台網格 */
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .plat { padding: 16px; border-radius: 12px; background: var(--panel);
+          border: 1px solid var(--line); box-shadow: var(--shadow); }
+  .plat.edge { border-color: var(--accent); }
+  .plat h3 { margin: 0; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+  .plat .engine { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); margin-top: 8px; }
+  .plat .ci { margin-top: 10px; font-size: 12px; color: var(--ink-faint); }
+  .badge { font-family: var(--mono); font-size: 10.5px; padding: 2px 7px; border-radius: 5px;
+           background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+
+  /* Edge 三套件 */
+  .three { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .pkg { padding: 15px 16px; border-radius: 12px; background: var(--panel);
+         border: 1px solid var(--line); box-shadow: var(--shadow); }
+  .pkg .name { font-family: var(--mono); font-size: 13px; color: var(--accent); font-weight: 600; }
+  .pkg .role { font-size: 13.5px; color: var(--ink-soft); margin-top: 6px; }
+
+  /* PHC 展示 */
+  .phc { padding: 16px 18px; overflow-x: auto; }
+  .phc code { font-family: var(--mono); font-size: 13.5px; white-space: nowrap; }
+  .phc .k { color: var(--amber); }
+  .phc .v { color: var(--accent); }
+
+  /* 守門 */
+  .gates { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .gate { padding: 14px 16px; border-radius: 12px; background: var(--panel);
+          border: 1px solid var(--line); box-shadow: var(--shadow); }
+  .gate .g { font-family: var(--mono); font-size: 11px; color: var(--ink-faint);
+             text-transform: uppercase; letter-spacing: .1em; }
+  .gate .t { font-weight: 600; font-size: 14px; margin: 6px 0 4px; }
+  .gate .d { font-size: 13px; color: var(--ink-soft); }
+
+  /* 引擎表 */
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); }
+  th { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
+       color: var(--ink-faint); font-weight: 600; background: var(--panel-2); }
+  tr:last-child td { border-bottom: none; }
+  td .eng { font-family: var(--mono); font-size: 12.5px; color: var(--ink-soft); }
+  .ok-pill { font-family: var(--mono); font-size: 11px; color: var(--ok);
+             background: var(--ok-soft); padding: 2px 8px; border-radius: 5px; font-weight: 600; }
+
+  footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line);
+           color: var(--ink-faint); font-size: 13px; display: flex; flex-wrap: wrap;
+           gap: 8px 20px; align-items: center; }
+  footer .mono { font-family: var(--mono); }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Architecture · spec-first monorepo</div>
+    <h1>ArgonGuard</h1>
+    <p class="lede">OWASP 合規、跨語言與跨平台 <b>bit-identical</b> 的 Argon2id 密碼雜湊元件。一份語言中立規格、一批凍結測試向量，五個獨立引擎彼此可驗證對方產生的雜湊。</p>
+    <div class="meta">
+      <span class="tag">Argon2id · RFC 9106</span>
+      <span class="tag">PHC 標準格式</span>
+      <span class="tag">5 平台 · <b>bit-identical</b></span>
+      <span class="tag">MIT © Megapower Asia</span>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">01</span><h2>核心原則</h2>
+      <span class="sec-note">規格層自寫 · 密碼學層委外</span></div>
+    <div class="panel">
+      <div class="layer">
+        <div class="layer-label spec"><span class="dot spec"></span>規格層（自寫 · 五平台 bit-identical）</div>
+        <div class="chips">
+          <span class="chip amber">PHC parser／encoder</span><span class="arrow">→</span>
+          <span class="chip amber">Policy（OWASP frontier）</span><span class="arrow">→</span>
+          <span class="chip amber">needsRehash</span><span class="arrow">→</span>
+          <span class="chip amber">Errors（5 typed）</span><span class="arrow">→</span>
+          <span class="chip amber">Legacy（注入式）</span>
+        </div>
+      </div>
+      <div class="boundary">◆ internal provider 邊界（SPEC §8.5）— 引擎可抽換，不進公開 API</div>
+      <div class="layer">
+        <div class="layer-label engine"><span class="dot engine"></span>密碼學層（委外 · 久經驗證的引擎，永不自寫 Argon2 原語）</div>
+        <div class="chips">
+          <span class="chip">Konscious</span><span class="chip">@node-rs/argon2</span>
+          <span class="chip">argon2-cffi</span><span class="chip">password_hash / sodium</span>
+          <span class="chip">argon2id（WASM）</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">02</span><h2>權威來源 — spec/</h2>
+      <span class="sec-note">改這裡 = 改契約</span></div>
+    <div class="panel" style="padding:18px 20px">
+      <div class="chips">
+        <span class="chip amber">SPEC.md（normative v1.0.0）</span>
+        <span class="chip">reason-codes.json</span>
+        <span class="chip">engine-units.json</span>
+        <span class="chip">profiles.snapshot.json</span>
+        <span class="chip">vectors/v1/*（凍結 · append-only）</span>
+        <span class="chip">MANIFEST.sha256</span>
+      </div>
+      <div class="phc" style="margin-top:14px; padding-left:0; padding-right:0">
+        <code><span class="k">$argon2id$v=19$</span><span class="v">m=19456,t=2,p=1</span><span class="k">$</span>&lt;salt-b64&gt;<span class="k">$</span>&lt;hash-b64&gt;</code>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">03</span><h2>五平台實作</h2>
+      <span class="sec-note">同一規格、各自引擎</span></div>
+    <div class="grid">
+      <div class="plat"><h3>.NET</h3><div class="engine">Konscious（Isopoh 備援）</div><div class="ci">net8.0 · net48</div></div>
+      <div class="plat"><h3>Node.js</h3><div class="engine">@node-rs/argon2</div><div class="ci">遷入 @argonguard/core</div></div>
+      <div class="plat"><h3>Python</h3><div class="engine">argon2-cffi</div><div class="ci">3.9 – 3.14</div></div>
+      <div class="plat"><h3>PHP</h3><div class="engine">password_hash ＋ sodium</div><div class="ci">8.2 – 8.5</div></div>
+      <div class="plat edge"><h3>Edge / WASM <span class="badge">NEW</span></h3><div class="engine">argon2id（Emscripten）</div><div class="ci">Workers · Vercel · 瀏覽器</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">04</span><h2>Edge/WASM — monorepo 三套件</h2>
+      <span class="sec-note">edge 零 node 依賴</span></div>
+    <div class="three">
+      <div class="pkg"><div class="name">@argonguard/core</div><div class="role">平台無關規格層（零依賴）＋ Argon2Provider／CryptoPrimitives 注入邊界</div></div>
+      <div class="pkg"><div class="name">@argonguard/passwords</div><div class="role">Node 平台：@node-rs/argon2 引擎 ＋ node:crypto</div></div>
+      <div class="pkg"><div class="name">@argonguard/passwords-edge</div><div class="role">Edge 平台：argon2id WASM 靜態 import ＋ Web Crypto；記憶體守衛（highest 於 Workers 128MB 拋 typed error）</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">05</span><h2>跨平台一致性守門</h2>
+      <span class="sec-note">CI 擋 merge</span></div>
+    <div class="gates">
+      <div class="gate"><div class="g">守門 1 · guard.py</div><div class="t">spec 不變式</div><div class="d">frontier 表／default 哨兵／MANIFEST checksum／reason-code 一致</div></div>
+      <div class="gate"><div class="g">per-language</div><div class="t">conformance</div><div class="d">各平台對凍結向量逐筆比對</div></div>
+      <div class="gate"><div class="g">守門 3 · matrix.py</div><div class="t">4×4 round-trip</div><div class="d">四語言互驗，16 lang-pair × 凍結密碼集 × 三檔位</div></div>
+      <div class="gate"><div class="g">edge · 5×5</div><div class="t">x64／arm64 ＋ Miniflare</div><div class="d">argon2id WASM conformance ＋ 真 workerd（正+負向量）</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">06</span><h2>五引擎 bit-identical</h2>
+      <span class="sec-note">同 Argon2id 參數 → 同 tag</span></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>平台</th><th>引擎</th><th>血統</th><th>一致性</th></tr></thead>
+        <tbody>
+          <tr><td>.NET</td><td><span class="eng">Konscious</span></td><td>純 managed C#</td><td><span class="ok-pill">bit-identical</span></td></tr>
+          <tr><td>Node</td><td><span class="eng">@node-rs/argon2</span></td><td>RustCrypto</td><td><span class="ok-pill">bit-identical</span></td></tr>
+          <tr><td>Python</td><td><span class="eng">argon2-cffi</span></td><td>phc-winner C</td><td><span class="ok-pill">bit-identical</span></td></tr>
+          <tr><td>PHP</td><td><span class="eng">password_hash / sodium</span></td><td>libargon2 / libsodium</td><td><span class="ok-pill">bit-identical</span></td></tr>
+          <tr><td>Edge</td><td><span class="eng">argon2id</span></td><td>Emscripten C（參考實作）</td><td><span class="ok-pill">bit-identical</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">07</span><h2>強度檔位</h2>
+      <span class="sec-note">公開 API 唯一旋鈕 · 全 t=2 p=1</span></div>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr))">
+      <div class="plat"><h3>default</h3><div class="engine">m=19456（19 MiB）</div><div class="ci">OWASP 最低 · 永久哨兵</div></div>
+      <div class="plat"><h3>high</h3><div class="engine">m=65536（64 MiB）</div><div class="ci">Workers 建議上限</div></div>
+      <div class="plat"><h3>highest</h3><div class="engine">m=131072（128 MiB）</div><div class="ci">Workers 不相容 · 瀏覽器/Vercel</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="mono">github.com/Megapower-Asia-LLC/ArgonGuard</span>
+    <span>·</span>
+    <span>SPEC 1.0.0 · 五平台 · 三來源凍結向量</span>
+    <span>·</span>
+    <span class="mono">2026-07-06</span>
+  </footer>
+</div>
+
+<script>
+  // 尊重 reduced-motion（本頁無動畫，僅確保 focus 可見）
+  document.addEventListener("keydown", e => {
+    if (e.key === "Tab") document.documentElement.classList.add("kbd");
+  });
+</script>
