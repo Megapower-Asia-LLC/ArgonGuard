@@ -33,10 +33,12 @@ describe("workerd runtime（Miniflare）", () => {
     expect(ok).toBe(true);
   });
 
-  it("workerd(argon2id) 驗證四語言凍結向量 → bit-identical", async () => {
-    for (const e of load("verify.json").filter(x => x.expected === true)) {
+  it("workerd(argon2id) 驗證四語言凍結向量（正+負 → 只 accept 該 accept 的，抓驗證繞過）", async () => {
+    // 不 filter：4 個負向量（wrong-password / tampered-salt / tampered-tag / nfc-vs-nfd）
+    // 必須在真 workerd 跑，false-accept（驗證繞過）才會讓此 job 轉紅（PPLX 審核 #4）
+    for (const e of load("verify.json")) {
       const { ok } = await post({ op: "verify", password: utf8(e.passwordHex), encoded: e.encoded });
-      expect(ok, e.id).toBe(true);
+      expect(ok, e.id).toBe(e.expected);
     }
   });
 

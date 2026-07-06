@@ -28,6 +28,7 @@ const require = createRequire(import.meta.url);
 const engine = createWasmArgon2Provider(
   imp => WebAssembly.instantiate(readFileSync(require.resolve("argon2id/dist/simd.wasm")), imp),
   imp => WebAssembly.instantiate(readFileSync(require.resolve("argon2id/dist/no-simd.wasm")), imp),
+  8192, // 測試環境（Node）無 128MB 限制，用高上限驗證所有 profile（含 highest）bit-identical
 );
 const fixedSalt = (salt: Uint8Array): CryptoPrimitives => ({ randomBytes: () => salt, timingSafeEqual: webCryptoPrimitives.timingSafeEqual });
 const bcryptClaimer: LegacyPasswordVerifier = { canHandle: e => e.startsWith("$2b$"), verify: () => false };

@@ -28,8 +28,11 @@ jobs:
         working-directory: edge
       - run: npm run typecheck
         working-directory: edge
-      # argon2id WASM 對凍結向量（含 engine-raw：tagLen≠32、低記憶體）bit-identical
+      # argon2id WASM 對凍結向量（含 engine-raw、memory-budget 守衛）bit-identical
       - run: npm test
+        working-directory: edge
+      # 驗證發佈 dist 打包（tsup：bundle core、external argon2id + wasm 靜態 import）
+      - run: npm run build
         working-directory: edge
 
   # 真 workerd（Miniflare）：驗證 wasm 靜態 import 在生產 runtime 實際可跑

@@ -23,7 +23,7 @@
   ],
   "scripts": {
     "build": "tsup",
-    "test": "vitest run tests/conformance.test.ts",
+    "test": "vitest run tests/conformance.test.ts tests/memory-budget.test.ts",
     "typecheck": "tsc --noEmit",
     "test:workerd": "vitest run tests/workerd.test.ts"
   },
