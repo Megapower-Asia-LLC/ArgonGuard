@@ -38,7 +38,7 @@ describe("parsePhc 合法路徑", () => {
     expect(h.m).toBe(19456);
     expect(h.t).toBe(2);
     expect(h.p).toBe(1);
-    expect(h.salt.toString("utf8")).toBe("AronGuardV1S01!!");
+    expect(Buffer.from(h.salt).toString("utf8")).toBe("AronGuardV1S01!!");
     expect(h.tag.length).toBe(32);
     expect(h.hasKeyid).toBe(false);
     expect(h.hasData).toBe(false);
@@ -129,7 +129,7 @@ describe("encodePhc (SPEC §2 G1–G8)", () => {
     const encoded = encodePhc(65536, 2, 1, salt, tag);
     const parsed = parsePhc(encoded);
     expect(parsed.m).toBe(65536);
-    expect(Buffer.compare(parsed.salt, salt)).toBe(0);
-    expect(Buffer.compare(parsed.tag, tag)).toBe(0);
+    expect(Buffer.compare(Buffer.from(parsed.salt), salt)).toBe(0);
+    expect(Buffer.compare(Buffer.from(parsed.tag), tag)).toBe(0);
   });
 });

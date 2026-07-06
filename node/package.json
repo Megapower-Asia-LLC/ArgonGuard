@@ -26,7 +26,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "build": "tsup src/index.ts --format esm,cjs --dts --noExternal @argonguard/core",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
@@ -37,6 +37,7 @@
     "vitest": "^2.1.0"
   },
   "dependencies": {
+    "@argonguard/core": "file:../core",
     "@node-rs/argon2": "^2.0.2"
   }
 }

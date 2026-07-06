@@ -15,6 +15,11 @@ export type { Argon2Provider } from "./engine/provider.js";
 export { type CryptoPrimitives, webCryptoPrimitives } from "./crypto.js";
 export { timingSafeEqual } from "./constantTime.js";
 export { encodeBase64NoPad, decodeCanonicalBase64 } from "./base64.js";
+// 規格層公用函式（平台套件的 conformance helper / provider 需要；不屬終端公開 API）
+export { encodePhc, parsePhc, tryGetAlgorithm, type PhcHash } from "./phc.js";
+export { checkPolicy } from "./policy.js";
+export { validatePassword, utf8ByteLength } from "./input.js";
+export { ReasonCodes } from "./reasonCodes.js";
 export {
   ArgonGuardError,
   MalformedHashError,
