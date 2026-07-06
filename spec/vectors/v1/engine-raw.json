@@ -1,0 +1,37 @@
+{
+  "specVersion": "1.0.0",
+  "frozen": true,
+  "note": "engine-level raw hash（測 provider.hashRaw 對 tagLen≠32、低記憶體 edge-safe 參數）；三來源凍結。deterministic.json 為 profile 導向，此檔補引擎層覆蓋。",
+  "entries": [
+    {
+      "id": "eng-taglen64-high",
+      "passwordHex": "70617373776f7264",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 65536,
+      "t": 2,
+      "p": 1,
+      "tagLen": 64,
+      "encoded": "$argon2id$v=19$m=65536,t=2,p=1$QXJvbkd1YXJkVjFTMDEhIQ$Dk7O4w1QJpL/PgNjGN9siQJVa7BGIePYpgfG065JtC+wQ7B5mYSIuDN9sGdkvNetMsnYtKS5Nx0iW/mQ+btqMQ"
+    },
+    {
+      "id": "eng-lowmem-edge-safe",
+      "passwordHex": "70617373776f7264",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 4096,
+      "t": 3,
+      "p": 1,
+      "tagLen": 32,
+      "encoded": "$argon2id$v=19$m=4096,t=3,p=1$QXJvbkd1YXJkVjFTMDEhIQ$nJeSJp1aYvlJ6f5GTC9Sa0j2yZ1fLABORvnSU45t16c"
+    },
+    {
+      "id": "eng-lowmem-taglen64",
+      "passwordHex": "70617373776f7264",
+      "saltHex": "41726f6e477561726456315330312121",
+      "m": 4096,
+      "t": 3,
+      "p": 1,
+      "tagLen": 64,
+      "encoded": "$argon2id$v=19$m=4096,t=3,p=1$QXJvbkd1YXJkVjFTMDEhIQ$aIKK1UDJ6VFEWoeyEe/qgmEbsMyb3o7krwH9amCFaTGtuLU4RNxKdHKA2P1XitjOkeAfAjQgWCKSTB05DGrHLQ"
+    }
+  ]
+}

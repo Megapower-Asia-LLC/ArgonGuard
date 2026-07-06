@@ -29,3 +29,18 @@
 - 凍結後發現錯誤 → 開 `v2/` 新目錄重凍（保留本目錄與本紀錄），禁止原地修改。
 - M3d 跨語言矩陣的固定密碼集 = 本目錄凍結向量子集（不得另立第二份準向量）。
 - reject 類中标注 "(crafted)" 的字串為手工構造（政策在重算前拒絕，tag 真實性無關）；argon2i/argon2d 案例由 argon2-cffi 產生（演算法即拒絕理由）。
+
+## Append: engine-raw.json（2026-07-06，Edge/WASM 平台支援）
+
+engine-level raw hash 向量（append-only 新檔，不動既有向量）。補足 deterministic.json 的
+覆蓋缺口（PPLX edge 審核 #4）：deterministic.json 為 profile 導向（tagLen 恆 32），本檔測
+`provider.hashRaw` 對「非檔位」參數的產出——`tagLen≠32`（64）與低記憶體 edge-safe（`m=4096`，
+避免 Miniflare CI OOM，並驗證 edge 引擎於低記憶體下與四語言一致）。
+
+- 產生器：`spec/tools/gen_engine_raw.py`（沿用 `gen_vectors.dual` 的三來源 freeze gate）。
+- 3 筆：`eng-taglen64-high`(m=65536,tagLen=64)、`eng-lowmem-edge-safe`(m=4096,t=3,tagLen=32)、
+  `eng-lowmem-taglen64`(m=4096,t=3,tagLen=64)。
+- 凍結門同 deterministic：argon2-cffi × RustCrypto raw tag byte-for-byte 一致 + encoded 機械回解
+  + argon2 CLI 第三重（密碼 "password" ≤127 bytes，全數通過）。
+- 額外驗證：`@argonguard/passwords-edge` 的 argon2id（Emscripten C 參考實作，第 5 個獨立引擎）
+  對 3 筆全數 bit-identical（edge conformance 測試）。

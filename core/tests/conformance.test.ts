@@ -9,6 +9,7 @@ import {
   ArgonGuardError,
   decodeCanonicalBase64,
   encodeBase64NoPad,
+  encodePhc,
   MalformedHashError,
   PolicyViolationError,
   UnsupportedAlgorithmError,
@@ -117,6 +118,16 @@ describe("core needs-rehash 向量", () => {
           expect((err as ArgonGuardError).reason).toBe(e.expected.reason);
         }
       }
+    });
+  }
+});
+
+describe("engine-raw 向量（tagLen≠32 / 低記憶體 edge-safe，engine 層 hashRaw）", () => {
+  for (const e of load("engine-raw.json")) {
+    it(e.id, async () => {
+      const salt = bytes(e.saltHex);
+      const tag = await engine.hashRaw(bytes(e.passwordHex), salt, e.m, e.t, e.p, e.tagLen);
+      expect(encodePhc(e.m, e.t, e.p, salt, tag)).toBe(e.encoded);
     });
   }
 });
