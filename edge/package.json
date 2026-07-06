@@ -1,0 +1,39 @@
+{
+  "name": "@argonguard/passwords-edge",
+  "version": "0.1.0-dev",
+  "description": "ArgonGuard edge/WASM 平台套件（Cloudflare Workers / Vercel Edge / 瀏覽器）。規格層委由 @argonguard/core，引擎為 argon2id（純 WASM），CSPRNG／constant-time 為 Web Crypto。與四語言 bit-identical。",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Megapower-Asia-LLC/ArgonGuard.git",
+    "directory": "edge"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@argonguard/core": "file:../core",
+    "argon2id": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}
