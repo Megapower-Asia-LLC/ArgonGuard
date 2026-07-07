@@ -20,17 +20,19 @@
 
 ## 發佈 runbook
 
-版本軸：spec SemVer＝各套件 `SPEC_VERSION`＝metadata `Implements ArgonGuard Spec X.Y`；git tag `dotnet/vX.Y.Z`、`node/vX.Y.Z`、`python/vX.Y.Z`、`spec/vX.Y.Z` 觸發 release workflow；repository variable `PUBLISH_ENABLED=true` 才會真正推送（否則只 pack＋上傳 artifact＝dry-run）。
+版本軸：spec SemVer＝各套件 `SPEC_VERSION`＝metadata `Implements ArgonGuard Spec X.Y`；git tag `dotnet/vX.Y.Z`、`node/vX.Y.Z`、`edge/vX.Y.Z`、`python/vX.Y.Z`、`spec/vX.Y.Z` 觸發 `release.yml`（PHP 另走 `php/vX.Y.Z` → `php-mirror.yml`）；repository variable `PUBLISH_ENABLED=true` 才會真正推送（否則只 pack＋上傳 artifact＝dry-run）。**`@argonguard/core` 不發佈**（bundled 進 node/edge，見 [`naming.md`](naming.md)）——無 core tag、無 core release job；但 node/edge 的 release job 會先 build core（bundle + dts rollup 皆需 `core/dist`）。
 
 ### Aiken 帳號步驟（發佈前一次性）
 
-| 平台 | 動作 |
+> 逐平台的 2026 完整操作（2FA、OIDC/Trusted Publishing 設定、npm 首發 bootstrap、驗證指令）見 [`release-registration.md`](release-registration.md)。下表為速查。
+
+| 平台 | 動作（速查） |
 |---|---|
-| NuGet | 建帳號 → 產 API key → repo secret `NUGET_API_KEY`；（選配）寄 prefix reservation（草稿見 naming.md；被拒不影響發佈） |
-| npm | 註冊 org `argonguard` → granular token 或 trusted publisher → repo secret `NPM_TOKEN` |
-| PyPI | 建帳號 → 專案 `argonguard-passwords` 設 trusted publisher（指向本 repo `release.yml`，environment 不限）——之後零 token |
-| Packagist | 建公開 repo `Megapower-Asia-LLC/argonguard-php`（空）→ repo secret `MIRROR_PAT`（對該 repo 有 push 權的 token）→ 於 packagist.org submit 該鏡像 |
-| GitHub | repo variable `PUBLISH_ENABLED=true` |
+| NuGet | Microsoft 帳號開 2FA → 登入 nuget.org 註冊 username（**大小寫敏感、不可改**）→ 推薦 **Trusted Publishing（OIDC）**：設 policy（owner=`Megapower-Asia-LLC`／repo=`ArgonGuard`／workflow=`release.yml`／env 空）＋補 dotnet job 的 `id-token: write`＋`NuGet/login@v1`（secret `NUGET_USER`）；**或** API key fallback → secret `NUGET_API_KEY`（現有 push 已支援）。首發後 email `account@nuget.org` 申請 `ArgonGuard.*` prefix reservation |
+| npm（node＋edge） | 建**免費** org `argonguard`＋帳號 2FA →（classic token 已於 2025-12 廢除）**首發 bootstrap**：OIDC 無法建全新套件名，故 `@argonguard/passwords`、`@argonguard/passwords-edge` 各先手動 `npm publish --access public` 一次（`npm login` 或短期 granular token）→ 之後為兩套件設 Trusted Publisher（repo=`ArgonGuard`／workflow=`release.yml`／Allowed action 勾 `npm publish`）→ steady-state tokenless。token 路徑則設 secret `NPM_TOKEN`（granular、scope 限 `@argonguard`、≤90 天） |
+| PyPI | 建帳號＋**強制 2FA** → 設 pending publisher（project=`argonguard-passwords`／owner=`Megapower-Asia-LLC`／repo=`ArgonGuard`／workflow=`release.yml`／env 空）→ **零 token**（勿建 API token，否則停用 PEP 740 attestation） |
+| Packagist | GitHub＋Packagist 帳號**都開 MFA** → 建空 public repo `Megapower-Asia-LLC/argonguard-php`（預設分支 `main`）→ 授權 Packagist OAuth app 存取 org → secret `MIRROR_PAT`（fine-grained、對 `argonguard-php` 有 Contents 讀寫）→ 首發後於 packagist.org submit 鏡像 URL |
+| GitHub | repo variable `PUBLISH_ENABLED=true`（Settings → Secrets and variables → Actions → Variables）——gate 全平台真正推送 |
 
 ### 版本一致性
 

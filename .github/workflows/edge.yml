@@ -7,7 +7,7 @@ on:
     paths: ["edge/**", "core/**", "spec/**", ".github/workflows/edge.yml"]
 
 jobs:
-  # 第 5 個平台維度（5×5）：edge 對凍結向量 conformance，x64 + arm64 驗 SIMD 一致
+  # 第 5 個平台維度：edge 對四語言凍結向量 conformance（bit-identical），x64 + arm64 驗 SIMD 一致
   conformance:
     strategy:
       fail-fast: false

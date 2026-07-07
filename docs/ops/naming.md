@@ -3,14 +3,17 @@
 品牌：**ArgonGuard**（umbrella brand）；產品線後綴 `Passwords`（未來可延伸 `Tokens` 等）。
 名稱可用性查證日：2026-07-05（全部未被占用）。
 
-## 狀態表
+## 狀態表（五平台）
 
-| 平台 | 名稱 | 狀態 | 需要的動作（Aiken） |
+| 平台 | 套件名 | 狀態 | 需要的動作（Aiken） |
 |---|---|---|---|
-| NuGet | `ArgonGuard.Passwords` | 未註冊 | 首次 push 套件即佔名；另建議申請 prefix reservation（見下） |
-| npm | `@argonguard/passwords` | scope 未占用 | 於 npmjs.com 註冊 org「argonguard」（免費）；若名稱註冊不到 → fallback `argonguard-passwords` |
-| PyPI | `argonguard-passwords` | 未占用 | 建 PyPI 帳號後設定 trusted publishing（OIDC，指向本 repo release workflow）即可，毋須先發佔位版 |
-| Packagist | `argonguard/passwords` | vendor 未占用 | 以 GitHub 帳號登入 packagist.org submit 本 repo 的 php subtree mirror（M4 建立後） |
+| NuGet | `ArgonGuard.Passwords` | 未註冊 | 首次 push 即佔名；建議首發後 email 申請 `ArgonGuard.*` prefix reservation（見下） |
+| npm（node） | `@argonguard/passwords` | scope 未占用 | 於 npmjs.com 建免費 org「argonguard」（Unlimited public packages，$0） |
+| npm（edge） | `@argonguard/passwords-edge` | scope 未占用 | 同一 org／scope，與 node 共用同一發佈憑證，一併發佈 |
+| PyPI | `argonguard-passwords` | 未占用 | 建帳號＋強制 2FA → 設 Trusted Publishing（OIDC 指向 `release.yml`）；用 pending publisher 預註冊名稱 |
+| Packagist | `argonguard/passwords` | vendor 未占用 | GitHub 登入 packagist.org，submit php subtree 鏡像 repo `Megapower-Asia-LLC/argonguard-php` |
+
+> **`@argonguard/core`（JS/TS 規格層）不發佈到 npm**（ADR 0006）：透過 tsup `noExternal` 把 runtime 打包進 node/edge 的 `dist`、api-extractor `bundledPackages` 把型別 inline 進 `.d.ts`；套件標 `"private": true` 防誤發。node/edge 消費者零感知，安裝樹只含各自真正的 runtime 依賴（`@node-rs/argon2`／`argon2id`）。逐平台完整操作步驟見 [`release-registration.md`](release-registration.md)。
 
 ## NuGet prefix reservation 信件草稿（寄 account@nuget.org）
 

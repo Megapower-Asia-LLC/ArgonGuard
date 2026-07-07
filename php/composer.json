@@ -3,6 +3,18 @@
     "description": "OWASP-compliant Argon2id password hashing component. Implements ArgonGuard Spec (PHC string format, OWASP frontier verification policy).",
     "license": "MIT",
     "type": "library",
+    "keywords": ["argon2id", "argon2", "password-hashing", "owasp", "phc", "security", "password"],
+    "homepage": "https://github.com/Megapower-Asia-LLC/ArgonGuard",
+    "authors": [
+        {
+            "name": "Megapower Asia LLC",
+            "homepage": "https://megapower.asia"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/Megapower-Asia-LLC/ArgonGuard/issues",
+        "source": "https://github.com/Megapower-Asia-LLC/argonguard-php"
+    },
     "require": {
         "php": ">=8.2"
     },

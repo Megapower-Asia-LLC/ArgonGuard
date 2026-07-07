@@ -32,7 +32,7 @@
 - **edge 入口零 node 依賴**（避免 wrangler 把 `node:crypto`／native 引擎打包進 edge bundle）。
 - **記憶體守衛**：`highest`（131072 KiB）需 2049 個 WASM 頁，超過 Cloudflare Workers 128 MiB isolate（2048 頁）；edge 預設上限 2048 頁，超上限的檔位/外部雜湊拋 `UnsupportedEnvironmentError`（typed error，非不透明 OOM）。瀏覽器/Vercel 可傳 `maxWasmPages` 調高。**Workers 建議用 `high`**。
 - **成本**：Workers 上 Argon2id（`m=19456`）單次 ≈ 100ms CPU，需 Workers Paid Plan（$5/月）；此為 Argon2id 安全參數固有成本。
-- CI：守門 3 擴為 **5×5** round-trip 矩陣；edge 在真 workerd（Miniflare）上驗證，x64＋arm64 確認 SIMD/no-SIMD 輸出一致。
+- CI：跨語言 round-trip 矩陣維持 **4×4**（四語言 CLI harness）；edge 的第五平台維度由 `edge.yml` 對四語言凍結向量 conformance（bit-identical）＋真 workerd（Miniflare，x64＋arm64 確認 SIMD/no-SIMD 一致）達成。
 
 ### 安全
 

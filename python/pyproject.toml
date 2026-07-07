@@ -18,12 +18,15 @@ classifiers = [
     "Intended Audience :: Developers",
     "Topic :: Security :: Cryptography",
     "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
     "Typing :: Typed",
 ]
 dependencies = ["argon2-cffi>=21.2"]
 
 [project.urls]
+Homepage = "https://github.com/Megapower-Asia-LLC/ArgonGuard"
 Repository = "https://github.com/Megapower-Asia-LLC/ArgonGuard"
+Issues = "https://github.com/Megapower-Asia-LLC/ArgonGuard/issues"
 Documentation = "https://github.com/Megapower-Asia-LLC/ArgonGuard/tree/main/python"
 
 [project.optional-dependencies]

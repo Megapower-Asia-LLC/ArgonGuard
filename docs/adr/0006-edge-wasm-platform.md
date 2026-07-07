@@ -31,13 +31,13 @@
 
 ## 理由
 
-- 選項 B（獨立 edge 子套件各自維護規格層）被判為「技術債預購合約」——規格層分叉會靜默破壞互通。抽 core 讓**單一 spec／單一凍結向量／單一規格層邏輯**成立，5×5 矩陣線性成立。
+- 選項 B（獨立 edge 子套件各自維護規格層）被判為「技術債預購合約」——規格層分叉會靜默破壞互通。抽 core 讓**單一 spec／單一凍結向量／單一規格層邏輯**成立，五平台 bit-identical 互通線性成立。
 - provider 邊界本就是為「引擎可抽換」設計（ADR 0004）；edge 與 node 因同 Argon2id 參數＋PHC 格式而天然 bit-identical，凍結向量直接複用即為跨平台互通的證明。
 - 範圍外（不退讓）：不改任何既有語言實作的公開 API、不改 spec 參數/檔位（凍結）、不新增 profile。
 
 ## 後果
 
 - JS/TS 規格層邏輯只改 `core/`，node/edge 不得各自分叉。
-- 守門 3 擴為 5×5；edge 在真 workerd（Miniflare 3，x64＋arm64）驗證，另加一組 edge-safe 低記憶體向量（`m=4096,t=3,p=1`）避免 CI OOM，並要求凍結向量覆蓋 `tagLength ≠ 32`（needsRehash 對不同長度 hash 的比對正確性）。
+- 跨語言 round-trip 矩陣維持 4×4（四語言 CLI harness）；**edge 第五維**因需 workerd/bundler、不進 CLI harness，改由 `edge.yml` 對四語言凍結向量 conformance（bit-identical）＋真 workerd（Miniflare 3，x64＋arm64）驗證，另加一組 edge-safe 低記憶體向量（`m=4096,t=3,p=1`）避免 CI OOM，並要求凍結向量覆蓋 `tagLength ≠ 32`（needsRehash 對不同長度 hash 的比對正確性）。
 - 消費端在 Workers 用 Argon2id 需 Workers Paid Plan（$5/月），屬 Argon2id 安全參數固有成本、非 ArgonGuard 引入。
 - Edge/WASM 已通過對抗式審查（記憶體守衛、負向量 workerd、型別邊界修復）。
