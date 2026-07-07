@@ -20,7 +20,7 @@ jobs:
         working-directory: node
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node }}
       # core 先 build：node 遷入後依賴 @argonguard/core 的 dist（否則 typecheck 找不到模組）
