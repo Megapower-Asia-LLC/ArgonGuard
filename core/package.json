@@ -1,6 +1,7 @@
 {
   "name": "@argonguard/core",
   "version": "0.1.0-dev",
+  "private": true,
   "description": "ArgonGuard 規格層（平台無關）：PHC parser/encoder、OWASP frontier 政策、needsRehash、base64、constant-time，以及 Argon2Provider / CryptoPrimitives 注入邊界。密碼學引擎與 CSPRNG 由平台套件（node/edge）注入。",
   "license": "MIT",
   "repository": {

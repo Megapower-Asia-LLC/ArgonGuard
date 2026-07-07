@@ -5,6 +5,7 @@ on:
     tags:
       - "dotnet/v*"
       - "node/v*"
+      - "edge/v*"
       - "python/v*"
 
 jobs:
@@ -49,6 +50,11 @@ jobs:
         with:
           node-version: 22
           registry-url: https://registry.npmjs.org
+      # @argonguard/core 不發佈，但 runtime bundle（tsup noExternal）與 .d.ts rollup
+      # （api-extractor bundledPackages）都需要先產出 core/dist，故必須先 build core。
+      - name: Build @argonguard/core (unpublished workspace dep)
+        working-directory: core
+        run: npm ci && npm run build
       - run: npm ci
       - run: npm run typecheck && npm test
       - run: npm run build
@@ -64,6 +70,42 @@ jobs:
         with:
           name: npm-package
           path: node/*.tgz
+
+  edge:
+    if: startsWith(github.ref, 'refs/tags/edge/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # npm provenance
+    defaults:
+      run:
+        working-directory: edge
+    env:
+      REF: ${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - name: Build @argonguard/core (unpublished workspace dep)
+        working-directory: core
+        run: npm ci && npm run build
+      - run: npm ci
+      - run: npm run typecheck && npm test
+      - run: npm run build
+      - name: Set version from tag
+        run: npm version "${REF#refs/tags/edge/v}" --no-git-tag-version --allow-same-version
+      - name: Publish to npm (provenance; needs NPM_TOKEN or trusted publisher)
+        if: vars.PUBLISH_ENABLED == 'true'
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm pack
+      - uses: actions/upload-artifact@v4
+        with:
+          name: npm-package-edge
+          path: edge/*.tgz
 
   python:
     if: startsWith(github.ref, 'refs/tags/python/v')

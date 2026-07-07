@@ -17,27 +17,28 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+      "require": { "types": "./dist/index.d.cts", "default": "./dist/index.cjs" }
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && npm run build:dts",
+    "build:dts": "tsc -p tsconfig.dts.json && api-extractor run --local && node -e \"require('fs').copyFileSync('dist/index.d.ts','dist/index.d.cts')\"",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@argonguard/core": "file:../core",
+    "@microsoft/api-extractor": "^7.52.0",
     "@types/node": "^22.20.0",
     "tsup": "^8.3.0",
     "typescript": "^5.6.0",
     "vitest": "^2.1.0"
   },
   "dependencies": {
-    "@argonguard/core": "file:../core",
     "@node-rs/argon2": "^2.0.2"
   }
 }
