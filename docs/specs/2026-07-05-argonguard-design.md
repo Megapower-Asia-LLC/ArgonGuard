@@ -2,6 +2,10 @@
 
 日期：2026-07-05。狀態：**已與 Perplexity 達成設計共識**（round 3 verdict「核准」，模型 anthropic/claude-opus-4-8 經 PPLX Agent API）。審核歷程：round 1 指出 OWASP 等效配置精確度 → v2 修正；round 2 verdict「需修改」（MAJOR-1 驗證端地板、MAJOR-2 PHP 雙 provider 單位）→ v3 全數修正（含 MINOR-1~5、NIT-1~4）；round 3 verdict「核准」，另提 5 項 NIT 級加固已併入本版（v3.1）。本文件為後續實作的 SOT。
 
+**修訂紀錄**
+
+- 2026-09-24：支援地板提升為 Node 22、Python 3.11（§4.2、§4.3、§5.3、§7 第 11 項；CI 矩陣改為 Node 22/24、Python 3.11–3.14）。依 §7 第 11 項「提升地板 = 套件 MAJOR」屬 MAJOR 等級變更；五平台套件都還沒發佈過，併入首個 MAJOR 1.0.0（見 `CHANGELOG.md`）。`spec/SPEC.md` 不涉及平台地板，不是 normative spec 變更，不觸發 spec 升版。
+
 ## 0. 專案背景與需求
 
 ArgonGuard 是跨語言的密碼雜湊公用函式庫（umbrella brand），供不同技術棧的專案以獨立元件方式引用。已確認需求：
@@ -178,13 +182,13 @@ ArgonGuard 為 umbrella brand，產品線後綴 `Passwords`（未來可延伸 To
 - 套件：npm `@argonguard/passwords`（先註冊 org「argonguard」；備援 `argonguard-passwords`）
 - 引擎：@node-rs/argon2（平台覆蓋最完整，含 Alpine musl／WASM fallback、無 postinstall、`hashRaw` 支撐向量驗證）；PHC 編碼自寫層——CI 加一項固定 salt 下「自寫 PHC 編碼 vs `@node-rs/argon2` 原生 `hash()` encoded 輸出」交叉比對斷言（零成本多一層防呆）
 - provider 抽象預留：Node ≥24.7 內建 `crypto.argon2` 成熟後可切零依賴路線；備援 node-argon2
-- 支援地板 Node 20 LTS；ESM + CJS 雙輸出；CI：linux x64/arm64、alpine、windows、macOS × Node 20/22/24
+- 支援地板 Node 22 LTS（2026-09 由 Node 20 提升，見文首修訂紀錄）；ESM + CJS 雙輸出；CI：linux x64/arm64、alpine、windows、macOS × Node 22/24
 
 ### 4.3 Python
 
 - 套件：PyPI `argonguard-passwords`；import `argonguard.passwords`（namespace package，替未來 tokens 預留）
 - 引擎：argon2-cffi 直接依賴（不經 passlib——已停止維護且 Python 3.13 損壞）；`hash_secret_raw` 重算 + `hmac.compare_digest`
-- 支援地板 Python 3.9（abi3 wheel 下限）；`py.typed` 完整型別
+- 支援地板 Python 3.11（專案支援政策，2026-09 由 3.9 提升，見文首修訂紀錄；在 argon2-cffi-bindings abi3 wheel 涵蓋範圍內，26.1.0 為 `cp310-abi3`）；`py.typed` 完整型別
 
 ### 4.4 PHP
 
@@ -220,7 +224,7 @@ ArgonGuard/
 ### 5.3 CI 守門（四道）
 
 1. **Profile 與 frontier 不變式**（建置期紅燈）：OWASP frontier 表斷言、profile 快照 append-only 比對、`default==(19456,2,1)` 哨兵
-2. **Per-language 向量 conformance**：.NET 雙 TFM（net8.0 Linux + net48 Windows）；Node 平台×版本矩陣；Python 3.9–3.14；PHP 8.2–8.5（每 PR 跑 standard provider＋雙 provider memlimit 換算專門 job；sodium-only 自編譯 build 降為 nightly）；**.NET 備援引擎 Isopoh conformance 為 nightly**
+2. **Per-language 向量 conformance**：.NET 雙 TFM（net8.0 Linux + net48 Windows）；Node 平台×版本矩陣；Python 3.11–3.14；PHP 8.2–8.5（每 PR 跑 standard provider＋雙 provider memlimit 換算專門 job；sodium-only 自編譯 build 降為 nightly）；**.NET 備援引擎 Isopoh conformance 為 nightly**
 3. **跨語言 4×4 round-trip 矩陣**（擋 merge）：各實作 dev harness（stdin/stdout JSON 協議）對隨機密碼×三檔位互 hash 互驗 + needs-rehash 斷言
 4. **Supply-chain**：lockfile pin、Dependabot、底層引擎升版必過完整向量迴歸
 
@@ -253,4 +257,4 @@ ArgonGuard/
 8. 不保證記憶體清零、不提供 secure string 型別
 9. 核心不內建框架 adapter（文件範例先行，子套件 v1.1 再評估）
 10. 不出假 async（.NET/Python/PHP）、Node 的 Sync 變體 v1 不出
-11. 支援地板：.NET Framework 4.6.2／.NET 8、Node 20、Python 3.9、PHP 8.2；提升地板 = 套件 MAJOR
+11. 支援地板：.NET Framework 4.6.2／.NET 8、Node 22、Python 3.11、PHP 8.2；提升地板 = 套件 MAJOR

@@ -10,7 +10,7 @@ description = "OWASP-compliant Argon2id password hashing component. Implements A
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 authors = [{ name = "Megapower Asia LLC" }]
 keywords = ["argon2", "argon2id", "password", "hashing", "owasp", "phc", "security"]
 classifiers = [
