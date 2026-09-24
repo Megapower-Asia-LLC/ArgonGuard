@@ -24,7 +24,7 @@ jobs:
       REF: ${{ github.ref }}
       MIRROR_PAT: ${{ secrets.MIRROR_PAT }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Split php/ subtree and push to mirror
