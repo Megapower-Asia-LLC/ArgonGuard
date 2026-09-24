@@ -2,7 +2,7 @@
 
 OWASP 合規的 Argon2id 密碼雜湊元件。Implements **ArgonGuard Spec 1.0.0**（`spec/SPEC.md`；`argonguard.passwords.SPEC_VERSION == "1.0.0"`）。
 
-- Python >= 3.9，唯一 runtime 依賴 [`argon2-cffi`](https://pypi.org/project/argon2-cffi/)（久經驗證的引擎；ArgonGuard 只做規格層）
+- Python >= 3.11，唯一 runtime 依賴 [`argon2-cffi`](https://pypi.org/project/argon2-cffi/)（久經驗證的引擎；ArgonGuard 只做規格層）
 - 與 .NET／Node.js／PHP 實作產出可互換的 PHC 字串（4×4 round-trip）
 
 ```bash

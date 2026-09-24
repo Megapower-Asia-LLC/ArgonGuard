@@ -8,6 +8,13 @@
 
 首個公開版本，實作 **ArgonGuard Spec 1.0.0**（`spec/SPEC.md`）。五平台套件同時發佈：`ArgonGuard.Passwords`（NuGet）、`@argonguard/passwords`（npm）、`argonguard-passwords`（PyPI）、`argonguard/passwords`（Packagist）、`@argonguard/passwords-edge`（npm，Edge/WASM）；JS/TS 生態另有共用規格層 `@argonguard/core`。
 
+### 破壞性變更
+
+- **支援地板提高：Node.js ≥ 22（原 ≥ 20）、Python ≥ 3.11（原 ≥ 3.9）**。比較基準是發佈前文件（本檔與設計文件）原本寫的支援承諾，不是任何已發佈版本：五平台套件都還沒發佈過，沒有使用者受影響。
+  - 理由：Node 20 已於 2026-04-30 EOL；Python 3.9 已於 2025-10-31 EOL、3.10 將於 2026-10-31 EOL（argon2-cffi-bindings 26.1.0 也已要求 Python ≥ 3.10）。
+  - 版本號：依設計文件 §7 第 11 項「提升地板 = 套件 MAJOR」，這屬於 MAJOR 等級變更；因為還沒發佈，併入首個 MAJOR 1.0.0，不另升版號。1.0.0 發佈後若再提高地板，必須升套件 MAJOR。
+  - 影響範圍：`@argonguard/passwords` 的 `engines.node` 改為 `>=22`；`argonguard-passwords` 的 `requires-python` 改為 `>=3.11`；CI 矩陣改為 Node 22/24、Python 3.11–3.14。.NET、PHP、Edge/WASM 的支援範圍不變。
+
 ### 新增
 
 - **核心**：Argon2id 密碼雜湊，三核心操作 `hashPassword` / `verifyPassword` / `needsRehash`。
@@ -21,8 +28,8 @@
 ### 各平台引擎與支援範圍
 
 - .NET：Konscious.Security.Cryptography.Argon2；`netstandard2.0;net8.0`（.NET Framework 4.6.2+ 到 .NET 8）。
-- Node.js：@node-rs/argon2；Node ≥ 20；ESM + CJS 雙輸出；`hashPassword`/`verifyPassword` 為 async。
-- Python：argon2-cffi；Python ≥ 3.9；`py.typed`；namespace package（`argonguard.passwords`）。
+- Node.js：@node-rs/argon2；Node ≥ 22（Node 22 上游支援至 2027-04-30）；ESM + CJS 雙輸出；`hashPassword`/`verifyPassword` 為 async。
+- Python：argon2-cffi；Python ≥ 3.11；`py.typed`；namespace package（`argonguard.passwords`）。
 - PHP：原生 `password_hash`（PASSWORD_ARGON2ID）＋ ext-sodium fallback；PHP ≥ 8.2；零 runtime 依賴。
 - **Edge/WASM**：`argon2id`（純 WASM，Emscripten 編譯自 argon2 參考實作）＋ Web Crypto；Cloudflare Workers／Vercel Edge／瀏覽器；async。
 

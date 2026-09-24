@@ -9,11 +9,11 @@ on:
 
 jobs:
   test:
-    # M0 空殼：ubuntu × Node 20/22/24；完整平台矩陣（alpine/arm64/windows/macOS）於 M3a 擴充
+    # M0 空殼：ubuntu × Node 22/24（支援地板 Node 22）；完整平台矩陣（alpine/arm64/windows/macOS）於 M3a 擴充
     strategy:
       fail-fast: false
       matrix:
-        node: [20, 22, 24]
+        node: [22, 24]
     runs-on: ubuntu-latest
     defaults:
       run:

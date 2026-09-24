@@ -1,12 +1,14 @@
 # ArgonGuard 實作計畫（Master Plan v2）
 
 > **For agentic workers:** 本計畫為 milestone 層級 master plan；每個 milestone 執行前依 superpowers:writing-plans 展開細部任務（TDD、頻繁 commit）。SOT：`docs/specs/2026-07-05-argonguard-design.md`（Perplexity 共識版 v3.1）。v2：依 Perplexity 計畫審核 round 1 修正（MAJOR A2/B1/B2/C1/E1 與全部 MINOR/NIT）。
+>
+> 2026-09-24 修訂：Tech Stack、Global Constraints 與 M3b 的支援地板同步設計文件改為 Node 22、Python 3.11（見設計文件修訂紀錄與 `CHANGELOG.md`）；不是 normative spec 變更，不觸發 master plan 升版重審。
 
 **Goal:** 交付符合 OWASP 要求、跨語言（.NET/Node/Python/PHP）互通的 Argon2id 密碼雜湊元件，含凍結測試向量、跨語言互驗 CI 與完整文件。
 
 **Architecture:** spec-first monorepo——語言中立規格、機器可讀權威 artifact（reason codes、單位常數、向量、harness contract）與雙工具鏈凍結向量為第一等 artifact；四語言實作共同分層（Phc parser／Policy／internal Engine provider／Api／Errors／Legacy），規格層自寫、密碼學層委外。
 
-**Tech Stack:** .NET（Konscious 1.3.1、xUnit）、Node（@node-rs/argon2、Vitest、Node 20+）、Python（argon2-cffi 25.1.0、pytest、3.9+）、PHP（原生 password_hash＋sodium fallback、PHPUnit、8.2+）、GitHub Actions。
+**Tech Stack:** .NET（Konscious 1.3.1、xUnit）、Node（@node-rs/argon2、Vitest、Node 22+）、Python（argon2-cffi 25.1.0、pytest、3.11+）、PHP（原生 password_hash＋sodium fallback、PHPUnit、8.2+）、GitHub Actions。
 
 ## Global Constraints（逐字承襲共識設計 v3.1）
 
@@ -17,7 +19,7 @@
 - 五類 typed error＋跨語言 bit-identical reason code；verify false 只代表密碼不符
 - 向量凍結：兩獨立工具鏈（argon2 reference CLI × argon2-cffi）產生比對，ArgonGuard 自家實作不得參與
 - **TFM 三層關係**：build TFM = `netstandard2.0;net8.0`；驗證矩陣 = net48（Windows runner）＋net8.0（Linux）；對外宣稱支援地板 = .NET Framework 4.6.2
-- 其他支援地板：Node 20、Python 3.9、PHP 8.2
+- 其他支援地板：Node 22、Python 3.11、PHP 8.2
 - 套件名：`ArgonGuard.Passwords`／`@argonguard/passwords`／`argonguard-passwords`／`argonguard/passwords`
 - **三版本軸對應規則**：spec 語意版（SemVer，SPEC.md 記載）＝各套件 `SPEC_VERSION` 常數＝套件 metadata `Implements ArgonGuard Spec X.Y`；向量目錄版（v1→v2）僅在「凍結向量需要修正」時遞增，並必然伴隨 spec PATCH/MINOR 升版與 PROVENANCE 記錄。normative spec 變更後，master plan 亦升版並重新過計畫審核（M5 回饋迴路 SOP）。
 - **跨語言 API 形狀差異（刻意設計，非 drift）**：Node 為 async（Promise、needsRehash 同步），.NET/Python/PHP 為同步（不出假 async）——M5 對抗審查不得將此列為漂移
@@ -102,7 +104,7 @@
 **每語言共同 DoD**：全凍結向量 conformance 綠＋harness contract test 綠＋reason code 輸出 == `reason-codes.json`。
 
 - **M3a Node**：`@argonguard/passwords`、ESM+CJS、@node-rs/argon2；自寫 PHC 層 vs 原生 `hash()` 交叉比對；async Api；Vitest。
-- **M3b Python**：`argonguard-passwords`（`argonguard.passwords` namespace）、argon2-cffi；`hash_secret_raw`＋`hmac.compare_digest`；pytest 3.9–3.14。
+- **M3b Python**：`argonguard-passwords`（`argonguard.passwords` namespace）、argon2-cffi；`hash_secret_raw`＋`hmac.compare_digest`；pytest 3.11–3.14。
 - **M3c PHP**：`argonguard/passwords`；能力檢查 fail-fast 絕不降級 bcrypt；standard＋sodium fallback（`memlimit` 期望值斷言引 `engine-units.json`、off-by-1024 專門測試、上下界常數斷言）；雙 provider byte-for-byte 一致 job；PHPUnit。
 - **M3d 矩陣（守門 3，擋 merge）**：**維度公式鎖定＝16 個 lang-pair（4 hash × 4 verify，含自對自）× 凍結固定密碼集（**來源＝`spec/vectors/v1/` 凍結子集，列入 MANIFEST，不得另立第二份準向量**；含 t=1 與 frontier 邊界）× 三檔位**；擋 merge 判準完全可重現（固定 seed 派生的隨機案例列 informative 不擋 merge）＋needs-rehash truth table 跨語言斷言。
 

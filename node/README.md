@@ -6,7 +6,7 @@ OWASP 合規的 **Argon2id** 密碼雜湊元件。Implements **ArgonGuard Spec 1
 npm install @argonguard/passwords
 ```
 
-- Node.js **>= 20**（需 `String.prototype.isWellFormed()`），ESM／CJS 雙格式，內建 TypeScript 型別
+- Node.js **>= 22**（Node 20 已 EOL；需 `String.prototype.isWellFormed()`），ESM／CJS 雙格式，內建 TypeScript 型別
 - `hashPassword` / `verifyPassword` 為真背景執行緒 async（引擎 `@node-rs/argon2`，藏在內部 provider 邊界、不進公開 API）；`needsRehash` 同步
 - 與 .NET／Python／PHP 實作產出可互換的 PHC 字串（4×4 cross-language round-trip）
 
